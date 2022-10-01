@@ -1,0 +1,217 @@
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+    cookie:
+  </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="xxl" badge="danger"></cds-icon>
+            </a>
+
+            <a href="" class="nav-link nav-icon" aria-label="settings">
+                <cds-icon shape="cog" size="xxl"></cds-icon>
+            </a>
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+
+        <ul>
+            <li>Root</li>
+            <li>
+                <a [routerLink]=""> </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+        <main class="content-area">
+            <form [formGroup]="" class="tripForm">
+
+                <div>
+                    <div>
+                        <label for="tripDate">Date</label>
+                        <input type="date" id='tripDate' [disabled]="" name="tripDate" formControlName='tripDate'>
+                    </div>
+
+                    <div>
+                        <label for="tripCar">Vehicule</label>
+                        <select name="tripCar" id="tripCar" formControlName='tripCar'>
+                  <option value="" [disabled]="">M1</option>
+                  <option value="" [disabled]="">M3</option>
+                  <option value="" [disabled]="">M2</option>
+                </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripProduct">Produit</label>
+                        <select name="tripProduct" id="tripProduct" formControlName='tripProduct'>
+                            <option value="" [disabled]="">M1</option>
+                            <option value="" [disabled]="">M3</option>
+                            <option value="" [disabled]="">M2</option>
+                        </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripReason">Motif</label>
+                        <select name="tripReason" id="tripReason" formControlName='tripReason'>
+                  <option value="" [disabled]="">M1</option>
+                  <option value="" [disabled]="">M3</option>
+                  <option value="" [disabled]="">M2</option>
+                </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="tripDriver">Chauffeur</label>
+                        <select name="tripDriver" id="tripDriver" formControlName='tripDriver'>
+                  <option value="" [disabled]="">M1</option>
+                  <option value="" [disabled]="">M3</option>
+                  <option value="" [disabled]="">M2</option>
+                </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripClient">Client</label>
+                        <select name="tripClient" id="tripClient" formControlName='tripClient'>
+                  <option value="" [disabled]="">M1</option>
+                  <option value="" [disabled]="">M3</option>
+                  <option value="" [disabled]="">M2</option>
+                </select>
+
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripPath">Trajet</label>
+                        <select name="tripPath" id="tripPath" formControlName='tripPath'>
+                  <option value="" [disabled]="">M1</option>
+                  <option value="" [disabled]="">M3</option>
+                  <option value="" [disabled]="">M2</option>
+                </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="productQuantity">Quantité</label>
+                        <input [disabled]="" type="number" min="0" name="productQuantity" id="productQuantity" formControlName="productQuantity">
+                    </div>
+                </div>
+
+                <div id="buttons" style="width: 20%;">
+                    <button style="width: 100%;" clrButton class="btn btn-success">Nouveau</button>
+                    <button style="width: 100%;" clrButton class="btn btn-primary">Enregistrer</button>
+
+                    <button style="width: 100%; background-color: black; color: white;" clrButton class="btn ">Automatique</button>
+
+                    <button style="width: 100%;" clrButton class="btn btn-info">Ordre de Mission</button>
+
+
+                </div>
+
+            </form>
+
+            <div>
+                <clr-datagrid>
+                    <clr-dg-placeholder>Aucun voyage trouvé</clr-dg-placeholder>
+
+                    <clr-dg-column class="columnRow" [clrDgField]="'dateCreation'">Date</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'name'">Vehicule</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'prod'">Produit</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'motif'">Motif</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'role'">Chauffeur</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'lastName'">Client</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'trajet'">Trajet</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'quantite'" [clrDgColType]="'number'">Quantite</clr-dg-column>
+
+                    <clr-dg-row id="dataGridRow" *clrDgItems="" [ngClass]="">
+
+                        <clr-dg-action-overflow id="actionRow">
+                            <button class="action-item">Ordre de mission</button>
+                            <button class="action-item">Editer</button>
+                            <button class="action-item">supprimer</button>
+                        </clr-dg-action-overflow>
+
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                        <clr-dg-cell class="cellule"></clr-dg-cell>
+                    </clr-dg-row>
+
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                            <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">Users per page</clr-dg-page-size>
+                            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} voyages
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+
+                </clr-datagrid>
+            </div>
+
+
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+            <app-menu-generale *ngIf="true"></app-menu-generale>
+        </nav>
+
+    </div>
+
+</clr-main-container>

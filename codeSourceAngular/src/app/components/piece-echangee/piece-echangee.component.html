@@ -1,0 +1,138 @@
+<div>
+    <div class="principale">
+
+        <div class="adminBouton">
+            <div>
+                <button clrButton type="button" class="btn btn-primary" (click)="openAddProduct()">
+          Ajouter un produit
+        </button>
+            </div>
+
+
+        </div>
+
+        <!--data table info administrateur-->
+        <div>
+
+            <clr-datagrid>
+                <clr-dg-placeholder>Aucun Produit Enregistrer</clr-dg-placeholder>
+
+                <clr-dg-column class="columnRow">IDProduit</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'name'">Nom:</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'unite'">unité:</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'coutUnitaire'" [clrDgColType]="'number'">coutUnitaire:</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'dateCreation'">Date de creation:</clr-dg-column>
+
+                <clr-dg-row *clrDgItems=" let responsable of listeProduit, let i=index" [clrDgItem]="responsable">
+                    <clr-dg-action-overflow>
+                        <button class="action-item" (click)="onEdit(responsable)">Editer</button>
+                        <button class="action-item" (click)="onDelete(responsable)">supprimer</button>
+
+                    </clr-dg-action-overflow>
+
+                    <clr-dg-cell>{{i+1}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.name}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.unite}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.coutUnitaire}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.dateEnVigueur | date: 'd MMMM y'}}</clr-dg-cell>
+
+
+                </clr-dg-row>
+
+                <!--ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+                    <clr-dg-detail>
+                        
+                        <clr-dg-detail-header>
+                            <div class="clr-row" style=" text-decoration: underline;">
+                                <div class="clr-col-12">
+                                    <h3 style="color:black">Details:</h3>
+                                    <span>
+
+                          </span>
+                                </div>
+
+                            </div>
+
+                        </clr-dg-detail-header>
+                        <clr-dg-detail-body>
+
+                            <div class="clr-row">
+                                <div class="clr-col-6">
+                                    <ul class="list-unstyled">
+
+                                        <li>
+                                            <h4>Nom: {{detail.name}}</h4>
+                                        </li>
+                                        <li>
+                                            <h4>Unité: {{detail.unite}} </h4>
+                                        </li>
+                                        <li>
+                                            <h4>date de creation: {{detail.dateEnVigueur}}:</h4>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                                <div class="clr-col-6">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <h4>Cout unitaire: {{detail.coutUnitaire}}</h4>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </clr-dg-detail-body>
+                    </clr-dg-detail>
+                </ng-template-->
+
+                <clr-dg-footer> Total: {{responsable.length-1}} responsables </clr-dg-footer>
+            </clr-datagrid>
+        </div>
+        <!--Modal d'enregistrement-->
+        <div>
+            <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openSaveProductModal">
+                <h3 class="modal-title">Ajouter un produit</h3>
+                <div class="modal-body">
+
+                    <form clrForm [formGroup]="productSaveForm">
+                        <div class="clr-row">
+                            <div class="clr-col-6">
+                                <clr-input-container>
+                                    <label for="intitule">Intitule</label>
+                                    <input clrInput id="intitule" type="text" name="intitule" formControlName="intitule" />
+                                    <clr-control-helper>Entrer le libelle du produit</clr-control-helper>
+                                    <clr-control-error>Obligatoire!</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label for="unite">Unite</label>
+                                    <input clrInput id="unite" type="text" name="unite" formControlName="unite" />
+                                    <clr-control-helper>Unité du produit</clr-control-helper>
+                                    <clr-control-error>Obligatoire!</clr-control-error>
+                                </clr-input-container>
+                            </div>
+
+                            <div class="clr-col">
+
+                                <clr-input-container>
+                                    <label for="coutUnitaire">Cout Unitaire </label>
+                                    <input clrInput id="coutUnitaire" type="number" name="coutUnitaire" formControlName="coutUnitaire" />
+                                    <clr-control-helper>Entrer le libelle du produit</clr-control-helper>
+                                    <clr-control-error>Obligatoire!</clr-control-error>
+                                </clr-input-container>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="closeModal()">Annuler</button>
+                    <button type="button" class="btn btn-success" [disabled]="isProduct" (click)="onSaveProduct()">Enregistrer</button>
+                </div>
+                <div class="modal-backdrop fade in" aria-hidden="true"></div>
+            </clr-modal>
+        </div>
+    </div>

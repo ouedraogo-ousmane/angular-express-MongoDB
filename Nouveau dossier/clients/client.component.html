@@ -1,0 +1,196 @@
+
+<div>
+  <div class="principale">
+
+    <div class="adminBouton">
+      <div>
+        <button  clrButton type="button" class="btn btn-primary" (click)="openAddClient()">
+          Ajouter un Client
+        </button>
+      </div>
+
+
+    </div>
+
+        <!--data table info administrateur-->
+        <div >
+
+          <clr-datagrid  >
+                <clr-dg-placeholder>Aucun Client trouvrer</clr-dg-placeholder>
+
+                  <clr-dg-column class="columnRow">IDClient</clr-dg-column>
+                  <clr-dg-column class="columnRow" [clrDgField]="'name'">Nom</clr-dg-column>
+                  <clr-dg-column class="columnRow" [clrDgField]="'role'">Type</clr-dg-column>
+
+                  <clr-dg-row  *clrDgItems=" let responsable of responsable, let i=index"
+                  [clrDgItem]="responsable">
+                    <clr-dg-action-overflow>
+                      <button class="action-item" (click)="onEdit(responsable)">Editer</button>
+                      <button class="action-item" (click)="onDelete(responsable)">supprimer</button>
+
+                    </clr-dg-action-overflow>
+
+                    <clr-dg-cell>{{i+1}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.name}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.role}}</clr-dg-cell>
+
+                  </clr-dg-row >
+
+                  <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+                    <clr-dg-detail>
+                      <clr-dg-detail-header>
+                        <div class="clr-row" style=" text-decoration: underline;">
+                         <div class="clr-col-12">
+                          <h3 style="color:black">Details:</h3>
+                          <span >
+
+                          </span>
+                         </div>
+
+                        </div>
+
+                      </clr-dg-detail-header>
+                      <clr-dg-detail-body>
+
+                        <div class="clr-row" >
+                          <div class="clr-col-6">
+                            <ul class="list-unstyled">
+
+                              <li> <h4> Nom:  {{detail.name}}</h4> </li>
+                              <li><h4>Prenom: {{detail.lastName}} </h4></li>
+                              <li> <h4>date de creation: {{detail.dateCreation}}:</h4> </li>
+
+                            </ul>
+
+                          </div>
+                          <div class="clr-col-6">
+                            <ul class="list-unstyled">
+                              <li>  <h4>type de client: {{detail.role}}</h4> </li>
+                              <li> <h4>IFU:</h4></li>
+                              <li> <h4>Telephone:</h4> </li>
+                              <li><h4>Adresse:</h4></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                      </clr-dg-detail-body>
+                    </clr-dg-detail>
+                  </ng-template>
+
+                  <clr-dg-footer> Total: {{responsable.length}} responsables </clr-dg-footer>
+          </clr-datagrid>
+        </div>
+
+
+        <!--save client -->
+        <div>
+        <clr-wizard #wizard [clrWizardOpen]="openSaveClientModal" clrWizardSize='lg' [clrWizardClosable]='false'>
+
+          <clr-wizard-title >Ajouter un Client</clr-wizard-title>
+
+          <div class="wizardButton">
+            <clr-wizard-button [type]="'cancel'" (click)="closeModal()">Cancel</clr-wizard-button>
+            <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+            <clr-wizard-button [type]="'next'"  [clrWizardButtonDisabled]="!isClientTypeChoice">Next</clr-wizard-button>
+            <clr-wizard-button [type]="'finish'" (clrWizardButtonClicked)="saveClient()">Enregistrer</clr-wizard-button>
+          </div>
+
+          <clr-wizard-page #pageOne [clrWizardPageNextDisabled]="false">
+
+            <ng-template clrPageTitle >Type de client</ng-template>
+            <ng-template clrPageNavTitle>Types de client</ng-template>
+
+            <form clrForm clrLayout="vertical" >
+              <div class="clr-row clr-align-items-center">
+
+                  <div class="clr-col imageClient" >
+                    <img src="../../assets/images/man-user-icon.png"
+                    alt=" particulier" width="100px;"
+                  (click)="ClickedPerson()"  >
+                    <h3 style="text-decoration: underline;">Particulier</h3>
+                  </div>
+
+                  <div class="clr-col imageClient" >
+                    <img src=" ../../assets/images/Authentificqtion.jpg"
+                    (click)="ClickedEntreprise()" alt=" Entreprise" width="100px;">
+                    <h3 style="text-decoration: underline;">Entreprise</h3>
+                  </div>
+
+              </div>
+            </form>
+          </clr-wizard-page>
+
+          <clr-wizard-page  #pageTwo [clrWizardPageNextDisabled]="isClient">
+
+            <ng-template clrPageTitle>Informations du client</ng-template>
+            <ng-template clrPageNavTitle>Informations Client</ng-template>
+
+          <div class="wizardFormContent">
+            <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+              <div>
+
+                <div>
+                  <clr-input-container>
+                    <label >Nom Client</label>
+                    <input type="text" clrInput name="nomClient" formControlName="nomClient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+
+                  <clr-input-container>
+                    <label >Telephone Client</label>
+                    <input type="text" clrInput name="telClient" formControlName="telClient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+
+                  <clr-input-container>
+                    <label >Adresse Client</label>
+                    <input type="text" clrInput name="adresse" formControlName="adresse"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+                </div>
+
+
+              </div>
+            </form>
+
+            <form clrForm clrLayout="vertical" [formGroup]="entrepriseForm" *ngIf="entrepriseImage">
+                <div>
+                  <clr-input-container>
+                    <label >IFU Entreprise</label>
+                    <input type="text" clrInput name="ifuClient" formControlName="ifuClient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+
+                  <clr-input-container>
+                    <label >Logo Entreprise</label>
+                    <input type="text" clrInput name="logoClient" formControlName="logoClient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+
+                  <clr-input-container>
+                    <label >RCCM Entreprise</label>
+                    <input type="text" clrInput name="rccmclient" formControlName="rccmclient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+                </div>
+
+            </form>
+
+            <form clrForm clrLayout="vertical" [formGroup]="personClientForm" *ngIf="personneImage">
+              <div>
+                  <clr-input-container>
+                    <label >Prenom Client</label>
+                    <input type="text" clrInput name="prenomClient" formControlName="prenomClient"/>
+                    <clr-control-error>obligatoire !</clr-control-error>
+                  </clr-input-container>
+                  </div>
+            </form>
+          </div>
+
+          </clr-wizard-page>
+
+        </clr-wizard>
+        </div>
+
+</div>

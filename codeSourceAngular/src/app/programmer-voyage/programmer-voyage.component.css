@@ -1,0 +1,218 @@
+search{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+ }
+
+ #search-input-sidenav-ng{
+     padding-left: 2Opx;
+     padding-right: 20px;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     margin-left: 10px;
+     border-radius: 5px;
+ }
+
+ .search-exercice{
+   padding-bottom: 10px;
+
+ }
+
+ .sub-nav{
+   display: flex;
+   justify-content:stretch;
+ }
+
+
+ .sidenav{
+   position:relative;
+   width: 10%;
+ }
+
+ .list-exercice >div{
+     color:seashell;
+ }
+
+ .exerciceAddForm{
+  position:relative;
+   width: 100%;
+ }
+
+ .div-button{
+   width: 90%;
+   display: flex;
+   justify-content: space-between;
+   flex-direction: row;
+   margin-top: 3rem;
+ }
+ .subnav{
+   position:relative ;
+
+ }
+
+ .subnav>p{
+   width: 15.5%;
+   margin: 0;
+   height: 100%;
+   background-color: rgba(66, 66, 240, 0.877);
+   font-weight: bold;
+   color:rgba(255, 255, 255, 0.979);
+   text-align: center;
+   border-top: 1px solid white;
+ }
+
+ .subnav>ul{
+     position: absolute;
+     left: 20%;
+ }
+
+ .subnav>ul>li{
+   display: inline-block;
+ }
+
+ .header {
+   position: relative;
+   background-color: rgba(66, 66, 240, 0.877);
+ }
+
+
+ .branding>span {
+     font-size: 20px;
+     font-weight: bold;
+ }
+
+ .branding>a {
+     position: relative;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     color: white;
+     border: 1px solid black;
+     background-color: rgba(0, 0, 0, 0.164);
+     margin-top: 5px;
+ }
+
+
+/*-------------------------------------------*/
+.tripForm{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px;
+
+}
+
+.tripForm>div{
+  width: 38%;
+  padding-left:10px;
+}
+
+.tripForm>div select{
+  margin-bottom: 10px;
+  padding-left:80px ;
+  padding-right: 80px;
+  padding-bottom: 5px;
+  padding-top: 3px;
+  border-radius: 5px;
+}
+#productQuantity{
+  border-radius: 5px;
+}
+.tripForm>div select:hover{
+  cursor: pointer;
+}
+
+.tripForm>div label{
+  text-decoration: underline;
+}
+
+input[type="date"]{
+  margin-bottom: 10px;
+  border:none;
+  border-bottom: 2px solid black;
+}
+
+.tripForm >div label{
+  width: 20%;
+}
+
+.tripForm>div>div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.autreFenetre{
+  margin-bottom: 10px;
+   padding: 5px;
+   margin-left: 0px;
+}
+
+.autreFenetre> button{
+  padding-left:15px ;
+  padding-right: 15px;
+}
+
+.autreFenetre> button:hover{
+  cursor: pointer;
+}
+
+#dataGridRow:hover{
+  background-color: skyblue;
+  cursor: pointer;
+}
+
+.impair{
+  background-color: #fff;
+}
+
+
+.pair {
+  background-color: rgba(64, 224, 208, 0.39);
+}
+.cellule{
+  text-align: center;
+}
+
+#actionRow{
+  background-color: rgba(0, 0, 0, 0.596);
+}
+.columnRow{
+  background-color: black;
+  font-weight: bold;
+  color: #fff;
+}
+#paginationRow,#dataGridRow{
+  font-weight: bold;
+  color: black;
+}
+
+.content-container{
+  background-color: rgba(238, 238, 238, 0.404);
+}
+
+.wizardButton{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  margin-top: 23px;
+
+}
+
+.wizardFormContent{
+  display: flex;
+   justify-content: space-between;
+   border-top:2px solid rgba(0, 0, 0, 0.322);
+}
+
+.imageClient{
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.imageClient:hover{
+  border: 2px solid blue;
+}

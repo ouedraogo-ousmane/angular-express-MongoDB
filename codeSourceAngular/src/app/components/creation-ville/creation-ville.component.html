@@ -1,0 +1,298 @@
+<!--bouttton action-->
+<div style="border-bottom:1px solid black">
+
+    <div class="clr-row clr-justify-content-between">
+        <div class="clr-col">
+            <button clrButton type="button" class="btn btn-primary" (click)="addNewCountries()">
+        Ajouter un pays
+      </button>
+        </div>
+
+        <div class="clr-col">
+            <button clrButton type="button" class="btn btn-primary" (click)="addNewCities()">
+          Ajouter une ville
+        </button>
+        </div>
+
+        <div class="clr-col ">
+            <button clrButton type="button" class="btn btn-primary" (click)="addNewPath()">
+         Creer un nouveau trajet
+        </button>
+        </div>
+    </div>
+
+</div>
+
+
+<!--data table info administrateur-->
+<div>
+
+    <clr-datagrid>
+        <clr-dg-placeholder>Aucun administrateur trouvrer</clr-dg-placeholder>
+        <clr-dg-column class="columnRow">IDPays</clr-dg-column>
+        <clr-dg-column class="columnRow">Nom</clr-dg-column>
+        <clr-dg-column class="columnRow">Date de création</clr-dg-column>
+
+        <clr-dg-row *clrDgItems=" let pays of listePays; let i=index " [clrDgItem]="pays">
+            <clr-dg-action-overflow>
+                <button class="action-item" (click)="onEdit(pays)">Editer</button>
+                <button class="action-item" (click)="onDelete(pays)">supprimer</button>
+
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell class="dg-cell">{{i+1}}</clr-dg-cell>
+            <clr-dg-cell class="dg-cell">{{pays.name}}</clr-dg-cell>
+            <clr-dg-cell class="dg-cell">{{pays.dateCreation}}</clr-dg-cell>
+
+        </clr-dg-row>
+
+        <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+            <clr-dg-detail>
+                <clr-dg-detail-header>
+                    <div style="text-align:center; text-decoration: underline; font-weight: bold; color:black;">
+                        <span>{{detail.name}}</span>
+                    </div>
+
+                </clr-dg-detail-header>
+                <clr-dg-detail-body>
+                    <div>
+                        <clr-stack-view>
+
+                            <clr-stack-block [clrStackViewLevel]="1" [clrStackViewSetsize]="3" [clrStackViewPosinset]="1">
+                                <clr-stack-label>Villes</clr-stack-label>
+                                <clr-stack-content>Trajet</clr-stack-content>
+                            </clr-stack-block>
+
+                            <clr-stack-block [clrStackViewLevel]="1" [clrStackViewSetsize]="3" [clrStackViewPosinset]="3">
+                                <clr-stack-label>OUAGADOUGOU </clr-stack-label>
+                                <clr-stack-content></clr-stack-content>
+
+                                <clr-stack-block [clrStackViewLevel]="2" [clrStackViewSetsize]="3" [clrStackViewPosinset]="1">
+                                    <clr-stack-label>Ouagadougou</clr-stack-label>
+                                    <clr-stack-content>
+
+                                        <div style=" display: flex; justify-content:space-between">
+                                            <div>
+                                                Abidjan
+                                            </div>
+                                            <div>
+                                                <span style="cursor:pointer">
+                                      <cds-icon title="supprimer" shape="trash"></cds-icon>
+                                </span>
+                                            </div>
+                                        </div>
+
+                                    </clr-stack-content>
+
+                                </clr-stack-block>
+
+                                <clr-stack-block [clrStackViewLevel]="2" [clrStackViewSetsize]="3" [clrStackViewPosinset]="2">
+                                    <clr-stack-label>Ouagadougou</clr-stack-label>
+
+                                    <clr-stack-content>
+                                        <div style=" display: flex; justify-content:space-between">
+                                            <div>
+                                                Bobo dioulasso
+                                            </div>
+                                            <div>
+                                                <span style="cursor:pointer">
+                                      <cds-icon title="supprimer" shape="trash"></cds-icon>
+                                </span>
+
+                                            </div>
+                                        </div>
+
+                                    </clr-stack-content>
+                                </clr-stack-block>
+
+                                <clr-stack-block [clrStackViewLevel]="2" [clrStackViewSetsize]="3" [clrStackViewPosinset]="3">
+                                    <clr-stack-label>Ouagadougou</clr-stack-label>
+
+                                    <clr-stack-content>
+                                        <div style=" display: flex; justify-content:space-between">
+                                            <div>
+                                                Acra
+                                            </div>
+                                            <div>
+                                                <span style="cursor:pointer">
+                                      <cds-icon title="supprimer" shape="trash"></cds-icon>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </clr-stack-content>
+                                </clr-stack-block>
+
+                            </clr-stack-block>
+
+                            <clr-stack-block [clrStackViewLevel]="1" [clrStackViewSetsize]="3" [clrStackViewPosinset]="3">
+                                <clr-stack-label>bobo dioulasso</clr-stack-label>
+                                <clr-stack-content></clr-stack-content>
+                                <clr-stack-block>
+
+                                    <clr-stack-label>bobo dioulasso</clr-stack-label>
+                                    <clr-stack-content>
+                                        <div style=" display: flex; justify-content:space-between">
+                                            <div>
+                                                Acrra
+                                            </div>
+                                            <div>
+                                                <span style="cursor:pointer">
+                                      <cds-icon shape="trash" title="supprimer"></cds-icon>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </clr-stack-content>
+                                </clr-stack-block>
+
+                                <clr-stack-block>
+                                    <clr-stack-label>Bobo Dioulasso</clr-stack-label>
+                                    <clr-stack-content>
+                                        <div style=" display: flex; justify-content:space-between">
+                                            <div>
+                                                Abidjan
+                                            </div>
+                                            <div>
+                                                <span style="cursor:pointer">
+                                      <cds-icon title="supprimer" shape="trash"></cds-icon>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </clr-stack-content>
+                                </clr-stack-block>
+                            </clr-stack-block>
+
+                        </clr-stack-view>
+
+                    </div>
+                </clr-dg-detail-body>
+            </clr-dg-detail>
+        </ng-template>
+
+        <clr-dg-footer> Total: {{listePays.length}} pays </clr-dg-footer>
+    </clr-datagrid>
+</div>
+
+<!--Modal ajouter pays -->
+<div *ngIf="openCountriesModal">
+    <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openModal">
+        <h3 class="modal-title">Ajouter un pays</h3>
+        <div class="modal-body">
+
+            <form clrForm [formGroup]="addCountriesForm">
+                <clr-input-container>
+                    <label for="nomPays">Nom du pays</label>
+                    <input clrInput id="nomPays" type="text" name="nomPays" formControlName='nomPays' value="nomPays" />
+                    <clr-control-helper>Entrer le nom d'un pays</clr-control-helper>
+                    <clr-control-error>Obligatoire!</clr-control-error>
+                </clr-input-container>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="onCancelCountriesModal()">Annuler</button>
+            <button type="button" class="btn btn-success" [disabled]="isCountriesValid" (click)="sendCountries()">Enregistrer</button>
+        </div>
+        <div class="modal-backdrop fade in" aria-hidden="true"></div>
+    </clr-modal>
+</div>
+
+<!--Modal ajouter ville -->
+<div *ngIf="openCitiesModal">
+    <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openModal">
+
+        <h3 class="modal-title">Ajouter un nouvelle ville</h3>
+        <div class="modal-body">
+
+            <form clrForm [formGroup]="addCitiesForm">
+                <div class="clr-row">
+                    <div class="clr-col-6">
+                        <div class="clr-row">
+
+                            <label class="clr-col-4" for="nomPays" style="font-weight: bold; color:black;">Nom du pays</label>
+
+                            <div class="clr-select-wrapper ">
+                                <select class="clr-col" placeholder="Select Option" id="nomPays" formControlName="nomPays">
+                                  <option *ngFor="let country of listePays">{{country.nom}}</option>
+                               </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="clr-col-6">
+                        <cds-alert status="warning">Le pays doit préalablement été enregistrés!</cds-alert>
+                    </div>
+                </div>
+
+                <clr-input-container>
+                    <label for="nomVille">Nom de la ville</label>
+                    <input clrInput id="nomVille" type="text" name="nomVille" formControlName="nomVille" />
+                    <clr-control-helper>Entrer le nom de la ville</clr-control-helper>
+                    <clr-control-error>Obligatoire!</clr-control-error>
+                </clr-input-container>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="onCancelCitiesModal()">Annuler</button>
+            <button type="button" class="btn btn-success" [disabled]="isCitiesValid" (click)="sendCities()">Enregistrer</button>
+        </div>
+        <div class="modal-backdrop fade in" aria-hidden="true"></div>
+    </clr-modal>
+</div>
+
+<!--Modal ajouter trajet -->
+<div *ngIf="openPathModal">
+
+    <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openModal">
+
+        <h3 class="modal-title">Ajouter un nouveau trajet</h3>
+        <div class="modal-body">
+
+            <div>
+                <cds-alert status="warning">Les viless doivent préalablement été enregistrés!</cds-alert>
+            </div>
+            <form clrForm [formGroup]="addPathForm">
+                <div class="clr-row">
+                    <div class="clr-form-control clr-col-6">
+                        <div class="clr-row">
+                            <label for="villeDepart" class="clr-control-label clr-col-4">Ville d'arrivee</label>
+
+                            <div class="clr-control-container clr-col-6">
+                                <div class="clr-select-wrapper">
+                                    <select placeholder="Select Option" id="villeDepart" formControlName="villeDepart" value="city._id">
+                                      <option *ngFor="let city of listeVille">{{city.nom}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clr-form-control clr-col-6">
+                        <div class="clr-row">
+
+                            <label for="villeArrivee" class="clr-control-label clr-col-4">Ville d'arrivee</label>
+
+                            <div class="clr-control-container  clr-col-6">
+                                <div class="clr-select-wrapper">
+                                    <select placeholder="Select Option" id="villeArrivee" formControlName="villeArrivee" value="city._id">
+                                      <option *ngFor="let city of listeVille">{{city.nom}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="onCancelPathModal()">Annuler</button>
+            <button type="button" class="btn btn-success" [disabled]="isPathValid" (click)="sendPath()">Enregistrer</button>
+        </div>
+        <div class="modal-backdrop fade in" aria-hidden="true"></div>
+    </clr-modal>
+</div>

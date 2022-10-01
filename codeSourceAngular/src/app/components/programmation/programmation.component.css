@@ -1,0 +1,40 @@
+
+.listCExO{
+  border-top:3px solid #eee;
+}
+
+.listCExO>a{
+  display: inline-block;
+  width: auto;
+
+}
+
+.listCExO>a:hover{
+  text-decoration: none;
+}
+
+.card{
+  color:black;
+  border-radius: 4px;
+  padding: 0;
+}
+
+.card:hover{
+  cursor: pointer;
+  box-shadow: 6px 4px 6px 4px #eee;
+}
+
+.card-media-title >span{
+  width: 60px;
+  height: 50px;
+  text-align: center;
+  color:#fff;
+  box-shadow: 4px 2px 4px 2px #eee;
+  background-color: #0072a3;
+  padding: 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+
+

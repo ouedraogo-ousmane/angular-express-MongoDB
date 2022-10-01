@@ -1,0 +1,191 @@
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+    cookie:
+  </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="lg" badge="danger"></cds-icon>
+            </a>
+
+            <a href="" class="nav-link nav-icon" aria-label="settings">
+                <cds-icon shape="cog" size="lg"></cds-icon>
+            </a>
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+
+        <ul>
+            <li>Root</li>
+            <li *ngFor="let item of navigationTab; let i = index">
+                <a [routerLink]="navigationTab[i]"> {{ navigationTab[i] }}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+        <main class="content-area">
+            <form [formGroup]="carSaveForm" class="tripForm">
+
+                <div>
+
+                    <div>
+                        <label for="immatriculation">Immatriculation:</label>
+                        <input type="text" id='immatriculation' name="immatriculation" formControlName='immatriculation'>
+                    </div>
+
+                    <div>
+                        <label for="poids">Poids:</label>
+                        <input type="number" id='poids' name="poids" formControlName='poids'>
+                    </div>
+
+                    <div>
+                        <label for="capacite">Capacite:</label>
+                        <input type="number" id='capacite' name="capacite" formControlName='capacite'>
+                    </div>
+
+                    <div>
+                        <label for="fonction">Fonction:</label>
+                        <select name="fonction" id="fonction" formControlName='fonction'>
+                            <option value="Livraison">Livraison</option>
+                            <option value="Approvisionnement">Approvisionnement</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+
+                    </div>
+
+
+                    <div>
+                        <label for="photo">Image:</label>
+                        <input type="file" (change)="onFileSelect($event)" placeholder="photo" id='photo' name="photo" formControlName='photo'>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="dateCirculation"> M. circulation:</label>
+                        <input type="text" id='dateCirculation' placeholder="yy" onfocus="(this.type='date')" name="dateCirculation" formControlName='dateCirculation'>
+                    </div>
+
+                    <div>
+                        <label for="vTechDateFin">Fin V. technique:</label>
+                        <input type="Date" id='vTechDateFin' name="vTechDateFin" formControlName='vTechDateFin'>
+                    </div>
+
+                    <div>
+                        <label for="vTechDateDebut">Debut V. technique:</label>
+                        <input type="Date" id='vTechDateDebut' name="vTechDateDebut" formControlName='vTechDateDebut'>
+                    </div>
+                    <div>
+                        <label for="AssDateDebut">Debut assurance:</label>
+                        <input type="Date" id='AssDateDebut' name="AssDateDebut" formControlName='AssDateDebut'>
+                    </div>
+                    <div>
+                        <label for="AssDateExpiration">Fin assurance:</label>
+                        <input type="Date" id='AssDateExpiration' name="AssDateExpiration" formControlName='AssDateExpiration'>
+                    </div>
+
+                </div>
+
+
+                <div id="buttons">
+                    <button *ngIf="backup" clrButton class="btn btn-primary" (click)="isNewSaving()">Nouveau</button>
+                    <button *ngIf="!backup" clrButton type="submit" class="btn btn-success" (click)="isSave()">Enregistrer</button>
+                    <button clrButton class="btn btn-danger" (click)="onCancel()">Annuler</button>
+
+                </div>
+            </form>
+
+            <div>
+                <clr-datagrid>
+                    <clr-dg-placeholder>Aucun véhicule trouvé</clr-dg-placeholder>
+                    <clr-dg-column class="columnRow" [clrDgField]="">USERID</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'immatriculation'">Immatriculation</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'Fonction'">Fonction</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'model'">Modele</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'capacite'">Capacite</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'disponibilite'">Disponibilite</clr-dg-column>
+                    <clr-dg-row id="dataGridRow" *clrDgItems="let vehicule of vehiculeListe; let i=index" [ngClass]="{pair:i%2==0, impair:i%2!=0}" [clrDgItem]="vehicule">
+
+                        <clr-dg-action-overflow id="actionRow">
+                            <button class="action-item" [disabled]="makeSelected" (click)="onEdit(vehicule)">Editer</button>
+                            <button class="action-item" [disabled]="makeSelected" (click)="onDelete(vehicule)">supprimer</button>
+                        </clr-dg-action-overflow>
+
+                        <clr-dg-cell class="cellule">{{i}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{vehicule.immatriculation}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{vehicule.fonction}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{vehicule.model }}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{vehicule.capacite }}</clr-dg-cell>
+                        <clr-dg-cell class="cellule" *ngIf="vehicule.disponibilite">Disponible</clr-dg-cell>
+                        <clr-dg-cell class="cellule" *ngIf="!vehicule.disponibilite">Indisponible</clr-dg-cell>
+
+                    </clr-dg-row>
+
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                            <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">Users per page</clr-dg-page-size>
+                            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} vehicules
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+
+                </clr-datagrid>
+            </div>
+
+
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+
+            <div>
+
+                <clr-modal [(clrModalOpen)]="open" [clrModalClosable]="false" clrModalSkipAnimation=true>
+                    <h3 class="modal-title"> Supprimer</h3>
+                    <div class="modal-body">
+                        <p>
+                            <span>Voulez vous vraiment supprimer <br> </span>
+                            <span style="color:black; font-weight:bold; ">Cette action est irreversible! </span>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" (click)="handleDone(false)">Annuler</button>
+                        <button type="button" class="btn btn-danger" (click)="handleDone(true)">Ok</button>
+                    </div>
+
+                </clr-modal>
+
+            </div>
+
+
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+            <app-menu-generale *ngIf="true"></app-menu-generale>
+        </nav>
+
+
+
+    </div>
+
+</clr-main-container>

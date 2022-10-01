@@ -1,0 +1,6 @@
+.adminBouton {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid grey;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,111 @@
+
+
+            <!-- Intitule de l'exercice-->
+            <div class="container" id="div-title" >
+                <p style="text-transform: uppercase; font-size: 20px;">
+                  <span style="font-weight: bold; color:black ">
+                     Exercice: {{exercice.dateDebut | date:'EEEE d MMMM y'}} - {{exercice.dateFin | date:'EEEE d MMMM y'}}
+                  </span>
+                </p>
+            </div>
+
+          <div class="clr-row">
+
+                <!-- card de detail sur l'exercice-->
+                <div class="clr-col-lg-8" >
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Detail</span>
+                        </div>
+
+                         <div class="card-block">
+                              <ul class="exercice-Action" style="border-right:1px solid #eee;">
+                                  <li> Etat de l'exercice: </li>
+
+                                  <li> Nombre de jour restant:</li>
+
+                                  <li> Depenses totales effectués: </li>
+
+                                  <li>Recettes totales enregistrés: </li>
+
+                                  <li>Resultat Net: </li>
+                              </ul>
+
+                              <ul class="exercice-Action" style="border-left:1px solid #eee; color:blue">
+                                <li *ngIf="exercice.etat === false"> En cours </li>
+                                <li *ngIf="exercice.etat === true"> Terminer </li>
+
+                                <li> {{exercice.dateFin | date:'EEEE d MMMM y'}}</li>
+
+                                <li> 10 000</li>
+
+                                <li>100 000</li>
+
+                                <li>Resultat Net: 99 000</li>
+                            </ul>
+
+                         </div>
+                 </div>
+
+                </div>
+
+                <!-- card d'action-->
+                <div class="clr-col-lg-3 card"  >
+                  <div class="card-header">
+                    <span> Action</span>
+                 </div>
+                  <button  class="btn btn-success" (click)="chronologiehandle()">Modifier</button>
+                  <button  class="btn btn-primary" (click)=" finExercice()" [disabled]="isCloseExercice"> Terminer </button>
+                  <button  class="btn btn-danger"   (click)="deleteExoHandle()">Supprimer</button>
+
+               </div>
+          </div>
+
+          <div>
+
+               <clr-modal [(clrModalOpen)]="open" [clrModalClosable] ="false" clrModalSkipAnimation=true>
+
+                    <h3 *ngIf="isprolonger" class="modal-title">Modifier</h3>
+                    <h3 *ngIf="isDelete" class="modal-title"> Supprimer</h3>
+                    <h3 *ngIf="isTerminer" class="modal-title">Cloturer</h3>
+
+                    <div class="modal-body">
+                      <form *ngIf="isprolonger" [formGroup]="dateFinForm" (ngSubmit)="onSubmitModifier()">
+
+                          <div>
+                            <label for="dateFin"> Enter la nouvelle date de fin: </label>
+                            <input type="date" clrDate id="dateFin" name="dateFin" formControlName="dateFin">
+                          </div>
+
+                          <div>
+                            <button type="button" class="btn btn-outline"
+                            (click)="handleCandel()">Cancel</button>
+
+                            <button type="submit"
+                            class="btn btn-success" (click)="handleDone()" [disabled]="isValid()" >Ok</button>
+                          </div>
+                      </form>
+
+                      <p *ngIf="isDelete">
+                        <span>Voulez vous vraiment supprimer cet exercice ?<br> </span>
+                        <span style="color:black; font-weight:bold; ">Cette action est irreversible! </span>
+                      </p>
+                      <p *ngIf="isTerminer">
+                        Voulez vous vraiment clore cet exercice ?
+                      </p>
+                    </div>
+
+                    <div class="modal-footer"  *ngIf="!isprolonger">
+                        <button type="button" class="btn btn-outline"
+                        (click)="handleCandel()">Cancel</button>
+
+                        <button type="button" class="btn"
+                        [ngClass]="{'btn-danger': isDelete,
+                        'btn-primary': isTerminer}"
+                        (click)="handleDone()">Ok</button>
+                    </div>
+
+                </clr-modal>
+
+            </div>
+

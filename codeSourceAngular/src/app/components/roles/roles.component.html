@@ -1,0 +1,99 @@
+<clr-main-container>
+
+    <clr-header class="header header-2">
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+    </clr-header>
+    <div class="content-container">
+        <main class="content-area">
+
+            <div>
+
+            </div>
+            <div class="div-form">
+                <div>
+                    <label for="options">Nom du profil:</label>
+                    <select clrSelect name="options">
+                        <option value="chauffeur" (click)="chauffeurdata()">Chauffeur</option>
+                        <option value="Gestionnaire du parc" (click)="parcdata()">Gestionnaire du parc</option>
+                         <option value="Gestionnaire de la logistique" (click)="logdata()">Gestionnaire de la logistique</option>
+                    </select>
+                </div>
+                <form action="">
+                    <clr-datagrid>
+                        <clr-dg-column [clrDgField]="'id'">ID</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'lecture'">Lecture</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'ajout'">Ajout</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'modification'">Modification</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'suppression'">Suppression</clr-dg-column>
+
+                        <clr-dg-row *clrDgItems="let operation of operations; let i = index">
+                            <clr-dg-cell>
+                                {{i}}
+                            </clr-dg-cell>
+                            <clr-dg-cell>
+                                {{operation.name}}
+                            </clr-dg-cell>
+                            <clr-dg-cell>
+                                <clr-checkbox-container>
+                                    <clr-checkbox-wrapper>
+                                        <input type="checkbox" clrCheckbox [checked]="operation.lecture" value="option1" name="options" />
+                                        <label></label>
+                                    </clr-checkbox-wrapper>
+                                </clr-checkbox-container>
+                            </clr-dg-cell>
+                            <clr-dg-cell>
+                                <clr-checkbox-container>
+                                    <clr-checkbox-wrapper>
+                                        <input type="checkbox" clrCheckbox [checked]="operation.ajout" value="option1" name="options" />
+                                        <label></label>
+                                    </clr-checkbox-wrapper>
+                                </clr-checkbox-container>
+                            </clr-dg-cell>
+                            <clr-dg-cell>
+                                <clr-checkbox-container>
+                                    <clr-checkbox-wrapper>
+                                        <input type="checkbox" clrCheckbox [checked]="operation.modification" value="option1" name="options" />
+                                        <label></label>
+                                    </clr-checkbox-wrapper>
+                                </clr-checkbox-container>
+
+                            </clr-dg-cell>
+
+                            <clr-dg-cell>
+                                <clr-checkbox-container>
+                                    <clr-checkbox-wrapper>
+                                        <input type="checkbox" clrCheckbox [checked]="operation.suppression" value="option1" name="options" />
+                                        <label></label>
+                                    </clr-checkbox-wrapper>
+                                </clr-checkbox-container>
+                            </clr-dg-cell>
+                        </clr-dg-row>
+
+                        <clr-dg-footer>
+                            <clr-dg-pagination #pagination [clrDgPageSize]="4">
+                                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Privilèges par page</clr-dg-page-size>
+                                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
+                            </clr-dg-pagination>
+                        </clr-dg-footer>
+                    </clr-datagrid>
+
+                    <div class>
+                        <button class="btn btn-success ">Enregistrer les modifications</button>
+                        <button class="btn btn-danger">Annuler</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </main>
+    </div>
+</clr-main-container>

@@ -1,0 +1,121 @@
+/* menu*/
+.userName{
+  width: auto;
+  margin-top:15px ;
+  margin-left: 2px;
+  border-left: 4px solid rgb(0, 89, 255);
+}
+
+
+.userName ul{
+  list-style-type: none;
+
+}
+
+.userName ul li{
+  padding-left: 5px;
+  padding-right:5px ;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgb(222, 236, 249);
+}
+
+.userName ul li:hover{
+  cursor: pointer;
+}
+.userName ul li a{
+  text-decoration: none;
+}
+
+.userName ul li a>span{
+  width: 60px;
+  height: 50px;
+  text-align: center;
+  color:#fff;
+  box-shadow: 4px 2px 4px 2px #eee;
+  background-color: #0072a3;
+  padding: 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.subnav{
+height: 200px;
+
+}
+
+.nav-link {
+  margin-left: 2px !important;
+  margin-top: 2px !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right:15px;
+  padding-left:15px ;
+}
+
+.nav-link:hover {
+  background-color: #fff !important;
+}
+#mark{
+  position:absolute;
+  width: 100%;
+  bottom: 5px;
+  text-align: center;
+  border: 1px solid #eee;
+  box-shadow: 2px 4px 2px 4px;
+
+}
+
+
+/* action detail exercice*/
+#div-title{
+  border-bottom:2px solid rgba(197, 187, 187, 0.747);
+  text-align: center;
+  margin-bottom: 1rem;
+
+}
+
+
+.exercice-Action{
+
+  list-style-type: none;
+  font-size: 18px;
+ }
+.card-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.exercice-Action>li{
+  padding: 15px;
+
+}
+
+.exercice-Action>li a{
+  text-decoration: none;
+
+}
+
+.card-header{
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn{
+  width: 100%;
+}
+
+/*----------------------------*/
+.modal-title, .modal-body>form{
+  font-weight: bold;
+  color: black;
+}
+
+
+
+.modal-body>form {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}

@@ -1,0 +1,282 @@
+<!-- Contenu principal -->
+<div class="principale">
+
+    <div class="adminBouton">
+        <div>
+
+        </div>
+
+        <div>
+            <button clrButton type="button" class="btn btn-primary" (click)="openAddDriver()">
+          Ajouter un Chauffeur
+        </button>
+        </div>
+    </div>
+
+
+    <div class="clr-row clr-row-scroll">
+        <!--Boucle *ngFor pour aficher dynamiquement-->
+
+        <a class="clr-col-lg-4 clr-col-12 itemDriver" (dblclick)="goToDriver()" *ngFor="let data of chauffeurListe">
+
+            <div class="card clickable" (mouseleave)="displaySpot()" (mouseover)="hiddenSpot()">
+
+                <div class="card-block">
+
+                    <div class="card-media-block clr-row ">
+                        <!--Zone informations-->
+                        <div class="clr-col-3">
+                            <img width="50px" src="../../../assets/images/man-user-icon.png" alt="">
+                        </div>
+
+                        <div class="clr-col-8">
+                            <div class="card-media-title">
+                                <span>{{data.nom}} {{data.prenom}}</span>
+                            </div>
+
+                            <!--Zone static-->
+                            <div class="clr-row">
+                                <div class="clr-col-md-2">
+                                    <span></span>
+                                </div>
+
+                                <div class="clr-col-md-4 clr-offset-6">
+                                    <span [hidden]="isSpot" class="spot"></span>
+
+                                    <span [hidden]="isSpot" class="spot"></span>
+
+                                    <span [hidden]="isSpot" class="spot"></span>
+
+                                    <!--(click)="" pour la suppression et la modification-->
+                                    <span [hidden]="isSpotAction" (click)="open = true" title="supprimer" class="isSpotAction">
+                                      <cds-icon shape="trash"></cds-icon>
+                                    </span>
+
+                                    <span [hidden]="isSpotAction" title="modifier">
+                                      <cds-icon shape="note" (click)="onEdit(data)"></cds-icon>
+                                    </span>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+
+</div>
+
+<!-- widzard d'ajout-->
+<div *ngIf="isNewDriver">
+    <clr-wizard #wizard [clrWizardOpen]="openSaveDriverModal" clrWizardSize='lg' [clrWizardClosable]='false'>
+
+        <clr-wizard-title>Ajouter un conducteur</clr-wizard-title>
+
+        <div class="clr-row clr-align-items-center" style="margin-top: 20px; margin-bottom: 20px">
+            <clr-wizard-button [type]="'cancel'" class="clr-col-3" (click)="closeModal()">Cancel</clr-wizard-button>
+            <clr-wizard-button [type]="'previous'" class="clr-col-3">Back</clr-wizard-button>
+            <clr-wizard-button [type]="'next'" class="clr-col-2">Next</clr-wizard-button>
+            <clr-wizard-button [type]="'finish'" class="clr-col-4" (clrWizardButtonClicked)="isSave()">Enregistrer</clr-wizard-button>
+
+        </div>
+
+        <clr-wizard-page #pageOne [clrWizardPageNextDisabled]="false">
+
+            <ng-template clrPageTitle>Infos d'identité</ng-template>
+            <ng-template clrPageNavTitle>Identité:</ng-template>
+
+            <form clrForm clrLayout="vertical" [formGroup]="chauffeurForm">
+
+                <div class="clr-row">
+
+                    <div class="clr-col-8">
+                        <clr-input-container>
+                            <label>Nom</label>
+                            <input type="text" clrInput name="nom" formControlName="nom" />
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+
+
+                        <clr-input-container>
+                            <label>Prenom</label>
+                            <input type="text" clrInput name="prenom" formControlName="prenom" />
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+
+                        <clr-input-container>
+                            <label>Telephone</label>
+                            <input type="text" clrInput name="telephone" formControlName="telephone" />
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+                    </div>
+
+
+                    <div class="clr-col-4">
+                        <clr-input-container>
+                            <label>Password</label>
+                            <input type="text" clrInput name="Password" formControlName="password" />
+                            <clr-control-helper>Ce champ n'est pas obligatoire</clr-control-helper>
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+
+                    </div>
+
+                </div>
+
+
+            </form>
+        </clr-wizard-page>
+
+        <clr-wizard-page #pageTwo [clrWizardPageNextDisabled]="!isDriver">
+
+            <ng-template clrPageTitle>Infos doucments</ng-template>
+            <ng-template clrPageNavTitle>Document:</ng-template>
+
+            <div class="wizardFormContent">
+                <form clrForm clrLayout="vertical" [formGroup]="chauffeurForm">
+                    <div class="clr-row">
+
+                        <div class="clr-col-6">
+                            <clr-input-container>
+                                <label>Adresse:</label>
+                                <input type="text" clrInput name="adresse" formControlName="adresse" />
+                                <clr-control-error>obligatoire !</clr-control-error>
+                            </clr-input-container>
+
+                            <clr-input-container>
+                                <label>Permis:</label>
+                                <input [disabled]="true" name="permis" />
+                                <clr-control-error>obligatoire !</clr-control-error>
+                            </clr-input-container>
+
+                            <clr-date-container>
+                                <label>date d'exp.</label>
+                                <input type="date" clrDate name="dateExp" formControlName="dateExp" />
+                                <clr-control-error>obligatoire !</clr-control-error>
+                            </clr-date-container>
+                        </div>
+
+                        <div class="clr-col-6">
+                            <clr-input-container>
+                                <label>photo</label>
+                                <input type="text" clrInput name="photo" formControlName="photo" />
+                                <clr-control-error>obligatoire !</clr-control-error>
+                            </clr-input-container>
+
+                            <div style="margin-top:30px">
+                                <cds-alert status="warning">Ces champs ne sont pas obligatoire!</cds-alert>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </clr-wizard-page>
+
+    </clr-wizard>
+</div>
+
+<!-- modal de suppression-->
+<div>
+    <clr-modal [(clrModalOpen)]="open" [clrModalClosable]="false" clrModalSkipAnimation=true>
+        <h3 class="modal-title"> Supprimer</h3>
+        <div class="modal-body">
+            <p style="color:black; font-weight:bold; ">
+                <cds-alert status="danger">Voulez vous vraiment supprimer ce chauffeur ?</cds-alert>
+                <cds-alert status="warning">Cette action est irreversible!</cds-alert>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="handleDone(false)">Annuler</button>
+            <button type="button" class="btn btn-danger" (click)="handleDone(true)">Ok</button>
+        </div>
+
+    </clr-modal>
+</div>
+
+<!-- modal de modification-->
+<div class="modal" *ngIf="openModifier">
+
+    <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width:55%; height:50%; ">
+
+        <div class="modal-content">
+
+            <form clrForm clrLayout="vertical" [formGroup]="chauffeurForm">
+                <div style="display: flex; justify-content: space-between;">
+
+                    <div style="text-align:center; text-transform: uppercase;
+                color:black; font-size: 20px; font-weight: bold;">
+                        Ajouter un Chauffeur
+                    </div>
+
+                    <div>
+                        <button clrButton class="btn btn-primary" (click)="openModifier = false">Annuler</button>
+                        <button clrButton class="btn btn-success" [disabled]="!isDriver" (click)="isSave()">Ajouter</button>
+                    </div>
+
+                </div>
+
+                <div style="display: flex; justify-content: space-between; padding-bottom: 30px; ">
+                    <div>
+                        <clr-input-container>
+                            <input clrInput type="text" id="nomDriver" name="nomDriver" size="30px" formControlName="nom">
+                            <label for="nomDriver">Nom:</label>
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+
+                        <clr-input-container>
+                            <input clrInput type="text" id="prenomDriver" name="prenomDriver" size="30px" formControlName="prenom">
+                            <label for="prenomDriver">prenom:</label>
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-input-container>
+
+                        <clr-input-container>
+                            <input clrInput type="text" id="adresseDriver" name="adresseDriver" size="30px" formControlName="adresse">
+                            <label for="adresseDriver">Adresse:</label>
+                        </clr-input-container>
+                    </div>
+
+                    <div>
+                        <clr-input-container>
+                            <input clrInput type="text" id="permisDriver" name="permisDriver" size="30px" formControlName="password">
+                            <label for="permisDriver">password</label>
+                        </clr-input-container>
+
+                        <clr-date-container>
+                            <label>Permis date d'Exp</label>
+                            <input type="date" clrDate name="dateExp" formControlName="dateExp" />
+                            <clr-control-error>obligatoire !</clr-control-error>
+                        </clr-date-container>
+
+                        <clr-input-container>
+                            <input clrInput type="text" id="photoDriver" name="photoDriver" size="30px" formControlName="photo">
+                            <label for="photoDriver">Photo:</label>
+                        </clr-input-container>
+
+
+
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="modal-backdrop" aria-hidden="true">
+    </div>
+
+</div>
+
+<p>
+    <router-outlet></router-outlet>
+</p>

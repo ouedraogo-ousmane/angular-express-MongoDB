@@ -1,0 +1,40 @@
+#title{
+  text-align:center;
+  border: 1px solid black;
+  background-color: rgba(66, 66, 240, 0.877);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color:#fff;
+
+}
+
+/* contenu du formulaire: bouton et input*/
+
+.exerciceForm{ /* div input*/
+   float:left;
+   width: 60%;
+   border-right: 3px solid #eee;
+}
+
+.div-button{ /* div bouton*/
+  float:left;
+  width: 40%;
+  padding-left: 20px;
+}
+
+.div-button:after { /*netoyage du float*/
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.ExoCreateLable{ /* div label*/
+  padding-bottom: 15px;
+   font-size: large;
+}
+
+
+/*---media queries necessaire : A voir*/
+

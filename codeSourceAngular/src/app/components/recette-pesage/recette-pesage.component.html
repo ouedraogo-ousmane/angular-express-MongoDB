@@ -1,0 +1,110 @@
+<form [formGroup]="recetteForm" class="tripForm">
+
+    <div>
+        <div>
+            <label for="numPesee">Num Pesee:</label>
+            <input type="text" id='numPesee' [disabled]="makeSelected" formControlName='numPesee'>
+        </div>
+
+        <div>
+            <label for="dateEntree">Date d'entree:</label>
+            <input type="date" id='dateEntree' [disabled]="makeSelected" name="dateEntree" formControlName='dateEntree'>
+        </div>
+
+        <div>
+            <label for="mission">Mission</label>
+            <select name="mission" id="mission" formControlName='mission'>
+                <option *ngFor="let vehicule of missionListe; let i = index" value="{{vehicule._id}}"
+                [disabled]="makeSelected" >HJHB454</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <div>
+        <div>
+            <label for="client">Client</label>
+            <select name="client" id="client" formControlName='client'>
+                <option *ngFor="let vehicule of missionListe; let i = index" value="{{vehicule._id}}"
+                [disabled]="makeSelected" >Ciment</option>
+            </select>
+
+        </div>
+        <div>
+            <label for="produit">Produit</label>
+            <select name="produit" id="produit" formControlName='produit'>
+                <option *ngFor="let vehicule of missionListe; let i = index" value="{{vehicule._id}}"
+                [disabled]="makeSelected" >Ciment</option>
+            </select>
+
+        </div>
+
+        <div>
+            <label for="prix">Prix Unitaire:</label>
+            <input type="number" id='prix' [disabled]="makeSelected" name="prix" formControlName='montant'>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <label for="firstSize">Poids 1</label>
+            <input type="number" id='firstSize' [disabled]="makeSelected" name="firstSize" formControlName='firstSize'>
+        </div>
+
+        <div>
+            <label for="secondSize">Poids 2</label>
+            <input type="number" id='secondSize' [disabled]="makeSelected" name="secondSize" formControlName='secondSize'>
+        </div>
+
+    </div>
+
+
+    <div id="buttons">
+        <button *ngIf="!backup" clrButton class="btn btn-primary" (click)="isNewSaving()">Nouveau</button>
+        <button *ngIf="!onUpdating" clrButton type="submit" class="btn btn-success" (click)="isSave()">Enregistrer</button>
+        <button clrButton class="btn btn-success" type="submit" *ngIf="onUpdating" (click)="updateData()">Modifier</button>
+        <button clrButton class="btn btn-danger">Supprimer</button>
+
+    </div>
+</form>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-placeholder>Aucun véhicule trouvé</clr-dg-placeholder>
+        <clr-dg-column class="columnRow" [clrDgField]="">USERID</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'echangeDate'">Date</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'motif'">Num Pesee</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'vehicule'">Mission</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'piece'">Produit</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'quantite'">Quantite</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'piece'">Prix Unitaire</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'montant'">Montant</clr-dg-column>
+        <clr-dg-row id="dataGridRow" *clrDgItems="let maintenance of recetteListe; let i=index" [ngClass]="{pair:i%2==0, impair:i%2!=0}" [clrDgItem]="">
+
+            <clr-dg-action-overflow id="actionRow">
+                <button class="action-item" (click)="onEdit(maintenance)">Editer</button>
+                <button class="action-item" (click)="onDelete(maintenance)">supprimer</button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell class="cellule">{{i}}</clr-dg-cell>
+            <clr-dg-cell class="cellule">27/10/2021</clr-dg-cell>
+            <clr-dg-cell class="cellule"> 7845455455 </clr-dg-cell>
+            <clr-dg-cell class="cellule">GGH55454</clr-dg-cell>
+            <clr-dg-cell class="cellule">clinker</clr-dg-cell>
+            <clr-dg-cell class="cellule">78220 </clr-dg-cell>
+            <clr-dg-cell class="cellule">8000 FCFA </clr-dg-cell>
+            <clr-dg-cell class="cellule">82544478 FCFA </clr-dg-cell>
+
+
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">piece par page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} Pieces
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+    </clr-datagrid>
+</div>

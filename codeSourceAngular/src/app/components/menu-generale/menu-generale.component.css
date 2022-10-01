@@ -1,0 +1,59 @@
+.profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    border-bottom: 1px solid black;
+    background-image: url('../../../assets/images/no_avatar.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 150px;
+}
+
+.menu-exercice {
+    margin: auto;
+    padding: 0;
+}
+
+.profile-image>img {
+    width: 50%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#title-exercice:hover {
+    cursor: pointer;
+}
+
+#title-exercice {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: rgba(66, 66, 240, 0.877);
+    text-align: center;
+    font-size: large;
+    text-transform: uppercase;
+}
+
+#title-exercice>a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidenav-content {
+    border-bottom: 1px solid black;
+}
+
+.sidenav-content>a {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    font-size: bold;
+    color: black;
+}
+
+.sidenav-content>a:hover {
+    background-color: rgba(128, 128, 128, 0.371);
+}

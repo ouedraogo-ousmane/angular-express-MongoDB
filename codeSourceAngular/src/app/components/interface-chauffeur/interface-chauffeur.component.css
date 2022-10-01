@@ -1,0 +1,58 @@
+
+.adminBouton{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid grey;
+  margin-bottom: 10px;
+}
+
+
+.card:hover{
+  cursor: pointer;
+  box-shadow: 6px 4px 6px 4px #eee;
+}
+
+.spot{
+  display: inline-block;
+   padding: 5px;
+   border-radius:5px;
+    background-color:rgba(0, 0, 0, 0.205);
+    margin-right: 3px;
+}
+
+.isSpotAction{
+  margin-right: 10px;
+  font-weight: bolder;
+  color:red;
+}
+
+.itemDriver{
+  color:#000;
+   font-weight:bold;
+    font-size:18px
+}
+/*-------------------------------------------*/
+
+
+
+#buttons {
+    width: 25%;
+}
+
+#buttons>button {
+    width: 100%;
+    border-radius: 5px;
+}
+
+
+
+#photo{
+  border:1px solid black;
+}
+
+/*--------------------------*/
+.clr-row-scroll{
+  width:80vw;
+  overflow:auto;
+  height:60vh;
+}

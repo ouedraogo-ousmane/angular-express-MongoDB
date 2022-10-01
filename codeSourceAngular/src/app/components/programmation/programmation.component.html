@@ -1,0 +1,31 @@
+<div class=" clr-row listCExO">
+
+    <a *ngFor="let exercice of exercices" class="clr-col-lg-4 clr-col-12" [routerLink]="['/exercicedetail',exercice._id]" (click)="gotoExercice(exercice)">
+
+        <div class="card" title=" Se connecter ...">
+
+            <div class="card-block">
+                <div class="card-media-block">
+                    <span class="card-media-title">
+                          <span>{{exercice.auteur.length}}</span>
+                    </span>
+
+                    <span>
+                        Exercice du {{exercice.dateDebut | date: 'dd/MM/yyyy'}} au {{exercice.dateFin | date: 'dd/MM/yyyy'}}
+                      </span>
+                </div>
+
+                <div style="text-align:center" *ngIf="exercice.etat">
+                    En cours
+                </div>
+
+                <div style="text-align:center" *ngIf="!exercice.etat">
+                    Terminee
+                </div>
+
+            </div>
+
+        </div>
+    </a>
+
+</div>

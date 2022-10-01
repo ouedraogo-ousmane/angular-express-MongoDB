@@ -1,0 +1,314 @@
+<div>
+    <div class="principale">
+
+        <div class="adminBouton">
+            <div>
+                <button clrButton type="button" class="btn btn-primary" (click)="openAddClient()">
+          Ajouter un Client
+        </button>
+            </div>
+
+
+        </div>
+
+        <!--data table info administrateur-->
+        <div>
+
+            <clr-datagrid>
+                <clr-dg-placeholder>Aucun Client trouvrer</clr-dg-placeholder>
+
+                <clr-dg-column class="columnRow">IDClient</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'name'">Nom : </clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'role'">Type :</clr-dg-column>
+                <clr-dg-column class="columnRow" [clrDgField]="'role'">Date de creation :</clr-dg-column>
+
+                <clr-dg-row *clrDgItems=" let responsable of listeParticulier, let i=index" [clrDgItem]="responsable">
+                    <clr-dg-action-overflow>
+                        <button class="action-item" (click)="onEdit(responsable)">Editer</button>
+                        <button class="action-item" (click)="onDelete(responsable)">supprimer</button>
+
+                    </clr-dg-action-overflow>
+
+                    <clr-dg-cell>{{i+1}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.nomClient}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.type}}</clr-dg-cell>
+                    <clr-dg-cell>{{responsable.dateCreation}}</clr-dg-cell>
+                </clr-dg-row>
+
+
+                <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+                    <clr-dg-detail>
+                        <clr-dg-detail-header>
+                            <span style="color:black; text-decoration: underline; font-weight: bolder;"> Detail:</span>
+                        </clr-dg-detail-header>
+                        <clr-dg-detail-body>
+                            <div>
+                                <clr-datagrid>
+                                    <clr-dg-column> <span style="color:black; font-weight: bolder;">Nom</span> </clr-dg-column>
+                                    <clr-dg-column *ngIf="detail.type==='Personne'"> <span style="color:black; font-weight: bolder;">Prenom</span> </clr-dg-column>
+                                    <clr-dg-column *ngIf="detail.type==='Entreprise'"> <span style="color:black; font-weight: bolder;">IFU</span> </clr-dg-column>
+                                    <clr-dg-column *ngIf="detail.type==='Entreprise'"> <span style="color:black; font-weight: bolder;">RCCM</span> </clr-dg-column>
+                                    <clr-dg-column> <span style="color:black; font-weight: bolder;">Adresse</span> </clr-dg-column>
+                                    <clr-dg-column> <span style="color:black; font-weight: bolder;">Telephone</span> </clr-dg-column>
+
+                                    <clr-dg-row>
+                                        <clr-dg-cell>{{detail.nomClient}}</clr-dg-cell>
+                                        <clr-dg-cell *ngIf="detail.type==='Personne'">{{detail.prenom}}</clr-dg-cell>
+                                        <clr-dg-cell *ngIf="detail.type==='Entreprise'">{{detail.ifu}}</clr-dg-cell>
+                                        <clr-dg-cell *ngIf="detail.type==='Entreprise'">{{detail.rccm}}</clr-dg-cell>
+                                        <clr-dg-cell>{{detail.adresseClient}}</clr-dg-cell>
+                                        <clr-dg-cell>{{detail.telClient}}</clr-dg-cell>
+                                    </clr-dg-row>
+                                </clr-datagrid>
+                            </div>
+                        </clr-dg-detail-body>
+                    </clr-dg-detail>
+                </ng-template>
+
+                <clr-dg-footer> Total: {{responsable.length}} responsables </clr-dg-footer>
+            </clr-datagrid>
+        </div>
+
+
+        <!--save client -->
+        <div>
+            <clr-wizard #wizard [clrWizardOpen]="openSaveClientModal" clrWizardSize='lg' [clrWizardClosable]='false'>
+
+                <clr-wizard-title>Ajouter un Client</clr-wizard-title>
+
+                <div class="wizardButton">
+                    <clr-wizard-button [type]="'cancel'" (click)="closeModal()">Cancel</clr-wizard-button>
+                    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+                    <clr-wizard-button [type]="'next'" [clrWizardButtonDisabled]="!isClientTypeChoice">Next</clr-wizard-button>
+                    <clr-wizard-button [type]="'finish'" (clrWizardButtonClicked)="saveClient()">Enregistrer</clr-wizard-button>
+                </div>
+
+                <clr-wizard-page #pageOne [clrWizardPageNextDisabled]="false">
+
+                    <ng-template clrPageTitle>Type de client</ng-template>
+                    <ng-template clrPageNavTitle>Types de client</ng-template>
+
+                    <form clrForm clrLayout="vertical">
+
+
+                        <div class="clr-row clr-align-items-center">
+                            <div class="clr-col-lg-6 clr-col-12">
+                                <a (click)="ClickedPerson()" class="card clickable">
+                                    <div class="card-img">
+                                        <img src="../../assets/images/man-user-icon.png" />
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="clr-col-lg-6 clr-col-12">
+                                <a (click)="ClickedEntreprise()" class="card clickable">
+                                    <div class="card-img">
+                                        <img src=" ../../assets/images/Authentificqtion.jpg" />
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </clr-wizard-page>
+
+                <clr-wizard-page #pageTwo [clrWizardPageNextDisabled]="isClient">
+
+                    <ng-template clrPageTitle>Informations du client</ng-template>
+                    <ng-template clrPageNavTitle>Informations Client</ng-template>
+
+                    <div class="wizardFormContent">
+                        <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+                            <div>
+
+                                <div>
+                                    <clr-input-container>
+                                        <label>Nom Client</label>
+                                        <input type="text" clrInput name="nomClient" formControlName="nomClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <label>Telephone Client</label>
+                                        <input type="text" clrInput name="telClient" formControlName="telClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <label>Adresse Client</label>
+                                        <input type="text" clrInput name="adresse" formControlName="adresse" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+                                </div>
+
+
+                            </div>
+                        </form>
+
+                        <form clrForm clrLayout="vertical" [formGroup]="entrepriseForm" *ngIf="entrepriseImage">
+                            <div>
+                                <clr-input-container>
+                                    <label>IFU Entreprise</label>
+                                    <input type="text" clrInput name="ifuClient" formControlName="ifuClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>Logo Entreprise</label>
+                                    <input type="file" clrInput name="logoClient" formControlName="logoClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>RCCM Entreprise</label>
+                                    <input type="text" clrInput name="rccmclient" formControlName="rccmclient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+                            </div>
+
+                        </form>
+
+                        <form clrForm clrLayout="vertical" [formGroup]="personClientForm" *ngIf="personneImage">
+                            <div>
+                                <clr-input-container>
+                                    <label>Prenom Client</label>
+                                    <input type="text" clrInput name="prenomClient" formControlName="prenomClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+                            </div>
+                        </form>
+                    </div>
+
+                </clr-wizard-page>
+
+            </clr-wizard>
+        </div>
+
+        <!--Modal un particulier -->
+        <!--Modal d'enregistrement-->
+        <div>
+            <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openParticulierModal">
+                <h3 class="modal-title">Modifier un client</h3>
+                <div class="modal-body">
+
+
+                    <div class="clr-row">
+
+                        <div class="clr-col-6">
+                            <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+                                <clr-input-container>
+                                    <label>Nom Client</label>
+                                    <input type="text" clrInput name="nomClient" formControlName="nomClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>Telephone Client</label>
+                                    <input type="text" clrInput name="telClient" formControlName="telClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                            </form>
+
+                        </div>
+                        <div class="clr-col-6">
+                            <form clrForm clrLayout="vertical" [formGroup]="personClientForm">
+                                <div>
+                                    <clr-input-container>
+                                        <label>Prenom Client</label>
+                                        <input type="text" clrInput name="prenomClient" formControlName="prenomClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+                                </div>
+                            </form>
+                            <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+                                <clr-input-container>
+                                    <label>Adresse Client</label>
+                                    <input type="text" clrInput name="adresse" formControlName="adresse" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="closeModal()">Annuler</button>
+                    <button type="button" class="btn btn-success" [disabled]="" (click)="updateClient()">Enregistrer</button>
+                </div>
+                <div class="modal-backdrop fade in" aria-hidden="true"></div>
+            </clr-modal>
+        </div>
+        <!--Modal d'enregistrement-->
+        <div>
+            <clr-modal class="modal-dialog fadeDown in" role="dialog" [clrModalClosable]="false" aria-hidden="true" [(clrModalOpen)]="openEntrepriseModal">
+                <h3 class="modal-title">Modifier un client</h3>
+                <div class="modal-body">
+
+
+                    <div class="clr-row">
+
+                        <div class="clr-col-6">
+                            <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+                                <clr-input-container>
+                                    <label>Nom Client</label>
+                                    <input type="text" clrInput name="nomClient" formControlName="nomClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>Telephone Client</label>
+                                    <input type="text" clrInput name="telClient" formControlName="telClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>Adresse Client</label>
+                                    <input type="text" clrInput name="adresse" formControlName="adresse" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                            </form>
+                        </div>
+
+                        <div class="clr-col-6">
+                            <form clrForm clrLayout="vertical" [formGroup]="entrepriseForm">
+                                <clr-input-container>
+                                    <label>IFU Entreprise</label>
+                                    <input type="text" clrInput name="ifuClient" formControlName="ifuClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>Logo Entreprise</label>
+                                    <input type="file" clrInput name="logoClient" formControlName="logoClient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+
+                                <clr-input-container>
+                                    <label>RCCM Entreprise</label>
+                                    <input type="text" clrInput name="rccmclient" formControlName="rccmclient" />
+                                    <clr-control-error>obligatoire !</clr-control-error>
+                                </clr-input-container>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="closeModal()">Annuler</button>
+                    <button type="button" class="btn btn-success" [disabled]="" (click)="updateClient()">Enregistrer</button>
+                </div>
+                <div class="modal-backdrop fade in" aria-hidden="true"></div>
+            </clr-modal>
+        </div>
+    </div>
+
+
+</div>

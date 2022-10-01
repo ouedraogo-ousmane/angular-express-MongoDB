@@ -1,0 +1,199 @@
+<!--Progress bar-->
+<div class="progress bottom" style="height:5px;" *ngIf="loading">
+    <clr-progress-bar [clrValue]="progressBar"></clr-progress-bar>
+</div>
+
+<!--Page content-->
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+              cookie:
+        </a>
+
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="xxl" badge="danger"></cds-icon>
+            </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="cog" size="xxl" (click)="gotoAdmin()"></cds-icon>
+            </a>
+
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+        <ul>
+            <li>Root</li>
+            <li *ngFor="let item of navigationTab; let i = index">
+                <a style="cursor: pointer;" (click)="gotoExo()"> {{ navigationTab[i] }}</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+
+        <main class="content-area">
+
+            <div *ngIf="!isExerciceClicked">
+                <!-- Component lorsqu' il y a des exercices creer-->
+                <div class="search-exercice" *ngIf="handleExercice && exerciceDetail">
+                    <form class="search">
+                        <div>
+                            <div *ngIf="!isExercice ">
+
+                                <span>Trier par mois :</span>
+                                <label for="search-input-sidenav-ng">
+                                      <input id="search-input-sidenav-ng" type="text" placeholder="Trouver un exercice" />
+                                    </label>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <button clrButton type="button" class="btn btn-primary" (click)="CeerExercice()">
+                                    Creer un nouvel exercice
+                                  </button>
+                        </div>
+                    </form>
+
+                </div>
+
+
+                <div class=" clr-row listCExO" *ngIf="!isExercice && !loading">
+
+                    <a *ngFor="let exercice of listExercice" class="clr-col-lg-4 clr-col-12" (click)="gotoExercice(exercice)">
+
+                        <div class="card" title=" Se connecter ...">
+
+                            <div class="card-block">
+                                <div class="card-media-block">
+                                    <span class="card-media-title">
+                                        <span>G</span>
+                                    </span>
+
+                                    <span>
+                                        Exercice du {{exercice.dateDebut | date: 'd MMMM y'}} au {{exercice.dateFin | date: ' d MMMM y'}}
+                                    </span>
+                                </div>
+
+                                <div style="text-align:center" *ngIf="!exercice.etat">
+                                    En cours
+                                </div>
+
+                                <div style="text-align:center" *ngIf="exercice.etat">
+                                    Terminee
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Component lorsqu' il n'y a d'exercice creer-->
+            <div class="list-exercice" *ngIf="isExercice && handleExercice && !loading">
+                <div>
+                    <h3 clrH3>
+                        Aucun exercice créer:
+                        <cds-inline-button (click)="CeerExercice()">Créer un exercice</cds-inline-button>
+                    </h3>
+                </div>
+            </div>
+
+
+            <div *ngIf="isAddExerciceButtonClic">
+
+                <div class="modal">
+
+                    <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width: 70%; height:75%">
+
+                        <div class="modal-content">
+                            <form [formGroup]="exerciceForm" style="padding: 25px;" clrForm clrLayout="vertical">
+
+                                <div style="display: flex; justify-content: space-between;">
+
+                                    <div style="text-align:center; text-transform: uppercase;
+                              color:black; font-size: 20px; font-weight: bold;">
+                                        Ajouter un Exercice
+                                    </div>
+
+                                    <div>
+                                        <button clrButton class="btn btn-primary" type="reset" (click)="CloseModal()">Annuler</button>
+
+                                        <button clrButton class="btn btn-success" type="submit" [disabled]="isValid()" (click)="AddExercice()">Ajouter</button>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; padding-bottom: 20px; ">
+
+                                    <div formGroupName="exerciceInfo" style="border-right:3px solid #eee; padding-right: 20px; width: 58%;">
+                                        <label for="auteur">Auteur:</label>
+                                        <input clrInput type="text" id="auteur" formControlName="auteur" name="auteur" size="50px" />
+
+
+                                        <clr-date-container>
+                                            <label for="debut">Date de debut:</label>
+                                            <input type="date" clrDate id="debut" formControlName="dateDebut" placeholder="Obligatoire" name="debut" />
+                                        </clr-date-container>
+                                    </div>
+
+                                    <div formGroupName="exerciceInfo" style=" width: 40%;">
+
+                                        <clr-date-container>
+                                            <label for="fin">Date de fin:</label>
+                                            <input type="date" clrDate id="fin" formControlName="dateFin" placeholder="Obligatoire" min="2019-11-17" name="fin" />
+                                        </clr-date-container>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-backdrop" aria-hidden="true">
+                    </div>
+                </div>
+
+            </div>
+
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+            <app-menu-generale *ngIf="ismenuWanted"></app-menu-generale>
+        </nav>
+
+    </div>
+
+    <!-- modal de creation d'exercice-->
+
+
+</clr-main-container>

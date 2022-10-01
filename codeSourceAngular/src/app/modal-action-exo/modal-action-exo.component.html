@@ -1,0 +1,31 @@
+
+  <app-ajouter-exercice-a
+     *ngIf="whichButton==1"
+     [exercice]="exercice"
+     (eventCloseModal)="eventCloseModal($event)">
+  </app-ajouter-exercice-a>
+
+
+  <clr-modal [(clrModalOpen)]="open" *ngIf="whichButton !=1 ">
+
+    <h3 *ngIf="isDelete" class="modal-title"> Supprimer</h3>
+    <h3 *ngIf="isTerminer" class="modal-title"> terminer un exercice </h3>
+
+    <div class="modal-body">
+      <p *ngIf="isDelete"> Voulez vous vraiment supprimer cet exercice ? cette action est irreversible! </p>
+      <p *ngIf="isTerminer">Voulez vous vraiment terminer cet exercice?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline"
+         (click)="handleCandel()">Cancel</button>
+
+        <button type="button" class="btn"
+         [ngClass]="{'btn-danger': isDelete,
+         'btn-primary': isTerminer}"
+         (click)="handleDone()">Ok</button>
+    </div>
+  </clr-modal>
+
+
+
+

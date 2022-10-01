@@ -1,0 +1,108 @@
+<form [formGroup]="pieceForm" class="tripForm">
+
+    <div>
+
+        <div>
+            <label for="tripCar">Vehicule</label>
+            <select name="tripCar" id="tripCar" formControlName='vehicule'>
+                <option *ngFor="let vehicule of listeVehicule; let i = index" value="{{vehicule._id}}"
+                [disabled]="makeSelected" >{{vehicule.immatriculation}}</option>
+            </select>
+
+        </div>
+
+        <div>
+            <label for="motif">Motif:</label>
+            <input type="text" id='motif' [disabled]="makeSelected" name="motif" formControlName='motif'>
+        </div>
+        <div>
+            <label for="cout">Main d'oeuvre:</label>
+            <input type="number" id='cout' [disabled]="makeSelected" name="cout" formControlName='cout'>
+        </div>
+
+    </div>
+
+
+
+    <div>
+        <div>
+            <label for="piece">Piece:</label>
+            <input type="text" id='piece' [disabled]="makeSelected" formControlName='piece'>
+        </div>
+
+        <div>
+            <label for="quantite">Quantite:</label>
+            <input type="number" id='quantite' [disabled]="makeSelected" name="quantite" formControlName='quantite'>
+        </div>
+
+        <div>
+            <label for="prix">Prix:</label>
+            <input type="number" id='prix' [disabled]="makeSelected" name="prix" formControlName='montant'>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label for="echangeDate">Date</label>
+            <input type="Date" id='echangeDate' [disabled]="makeSelected" name="echangeDate" formControlName='echangeDate'>
+        </div>
+
+        <div>
+            <label for="commentaire">Commentaire:</label>
+            <textarea [disabled]="makeSelected" name="commentaire" name="piece" placeholder="Enter a comment" formControlName='commentaire' id="commentaire"></textarea>
+        </div>
+
+
+    </div>
+
+
+    <div id="buttons">
+        <button *ngIf="!backup" clrButton class="btn btn-primary" (click)="isNewSaving()">Nouveau</button>
+        <button *ngIf="!onUpdating" clrButton type="submit" class="btn btn-success" (click)="isSave()">Enregistrer</button>
+        <button clrButton class="btn btn-success" type="submit" *ngIf="onUpdating" (click)="updateData()">Modifier</button>
+        <button clrButton class="btn btn-danger">Supprimer</button>
+
+    </div>
+</form>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-placeholder>Aucun véhicule trouvé</clr-dg-placeholder>
+        <clr-dg-column class="columnRow" [clrDgField]="">USERID</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'echangeDate'">Date</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'motif'">Motif</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'vehicule'">Vehicule</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'piece'">Piece</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'quantite'">Quantite</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'piece'">Prix</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'cout'">Main d'oeuvre</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'montant'">Montant</clr-dg-column>
+        <clr-dg-row id="dataGridRow" *clrDgItems="let maintenance of maintenanceListe; let i=index" [ngClass]="{pair:i%2==0, impair:i%2!=0}" [clrDgItem]="piece">
+
+            <clr-dg-action-overflow id="actionRow">
+                <button class="action-item" (click)="onEdit(maintenance)">Editer</button>
+                <button class="action-item" (click)="onDelete(maintenance)">supprimer</button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell class="cellule">{{i}}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.dateEntree | date: 'dd/MM/yyyy'}}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.motif}} </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.vehicule }}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.piece}} </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.quantite}} </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.montant}} FCFA </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{maintenance.cout}} FCFA </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{(maintenance.montant*maintenance.quantite)+ maintenance.cout}} FCFA </clr-dg-cell>
+
+
+
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">piece par page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} Pieces
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+    </clr-datagrid>
+</div>

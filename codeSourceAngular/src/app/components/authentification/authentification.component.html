@@ -1,0 +1,86 @@
+<clr-main-container>
+
+    <!-- Header de la page -->
+
+    <clr-header class="header header-2">
+
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+        cookie:
+      </a>
+
+
+            <a (click)="setLoginCookie()" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="xxl" badge="danger"></cds-icon>
+            </a>
+
+            <a href="" class="nav-link nav-icon" aria-label="settings">
+                <cds-icon shape="cog" size="xxl"></cds-icon>
+            </a>
+        </div>
+
+    </clr-header>
+
+
+    <div class="content-container">
+
+        <main class="content-area">
+
+            <div class="div-form">
+                <!-- Formulaire d'authentification-->
+                <form [formGroup]="usersForm" (ngSubmit)="login()">
+
+                    <h2>Connexion</h2>
+
+                    <cds-form-group layout="vertical" formGroupName="userLoginInfo">
+
+                        <cds-input layout="vertical" class="pwd">
+
+                            <label for="email"> Email ou Telephone: </label>
+
+                            <input type="text" id="email" formControlName="emailOrPhone" value="khkhhkhh" autofocus>
+
+                            <cds-control-message status="error" *ngIf="( isEmailValid.invalid &&(isEmailValid.dirty || isEmailValid.touched))">
+                                <span *ngIf="isEmailValid.errors.required">champs obligatoire</span>
+                                <span *ngIf="isEmailValid.errors.pattern"> email ou numero invalid</span>
+
+                            </cds-control-message>
+                        </cds-input>
+
+                        <cds-password layout="vertical" class="pwd" value="giu">
+                            <label for="pwd">Mot de passe:</label>
+                            <input type="password" id="pwd" placeholder="Enter le mot de passe" formControlName="password" autocomplete/>
+                            <!-- Validation des données-->
+                            <cds-control-message status="error" *ngIf="((isPasswordValid.invalid)&&  isPasswordValid.touched)">
+                                <span *ngIf="isPasswordValid.errors.required">champs obligatoire</span>
+                                <span *ngIf="(!isPasswordValid.errors.required && isPasswordValid.errors)">Entrer 6 à 8 caratères</span>
+                            </cds-control-message>
+
+                        </cds-password>
+
+
+                    </cds-form-group>
+
+                    <!-- bouton de soumission-->
+                    <div class="div-Submit pwd">
+                        <button type="submit" class="btn btn-success" [disabled]="isValid()"> Se connecter</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </main>
+    </div>
+</clr-main-container>

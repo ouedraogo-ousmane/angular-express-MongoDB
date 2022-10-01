@@ -1,0 +1,71 @@
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+    cookie:
+  </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="xxl" badge="danger"></cds-icon>
+            </a>
+
+            <a href="" class="nav-link nav-icon" aria-label="settings">
+                <cds-icon shape="cog" size="xxl"></cds-icon>
+            </a>
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+
+        <ul>
+            <li>Root</li>
+            <li *ngFor="let item of navigationTab; let i = index">
+                <a [routerLink]="navigationTab[i]"> {{ navigationTab[i] }}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+        <main class="content-area" style="margin-bottom: 0 !important; padding-top: 0;">
+            <div id="sous-menu">
+                <ul>
+                    <li class="list-item">
+                        <a [ngClass]="{mission:isNavClicked1}" (click)="gotoDepenseM()">Depenses missions</a>
+                    </li>
+
+                    <li class="list-item">
+                        <a [ngClass]="{maintenance:isNavClicked2}" (click)="gotoDepenseMain()">Depenses maintenanes</a></li>
+                </ul>
+            </div>
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+            <app-menu-generale *ngIf="true"></app-menu-generale>
+        </nav>
+
+    </div>
+
+</clr-main-container>

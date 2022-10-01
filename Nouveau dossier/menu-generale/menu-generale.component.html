@@ -1,0 +1,106 @@
+
+     <!-- menu de gauche -->
+      <div class="profile-image">
+
+     </div>
+
+     <div class="administration" *ngIf="exercice_id==null">
+
+      <section class="sidenav-content" style="margin-top: 5px;">
+        <a class="nav-link"
+        (click)="addCar()" >
+            <cds-icon shape="truck"></cds-icon> <span> Ajouter un vehicule</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="addDriver()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter un chauffeur</span>
+        </a>
+        <a class="nav-link"
+        (click)="addTools()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter une pieces</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="addClient()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter un client</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="addProducts()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter un produit</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="addTown()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter une ville </span>
+        </a>
+        <a class="nav-link"
+        (click)="addCountry()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter un Pays </span>
+        </a>
+
+        <a class="nav-link"
+        (click)="addTraffic()" >
+            <cds-icon shape="truck"></cds-icon> <span>Ajouter un trajet</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="monotoring()" >
+            <cds-icon shape="truck"></cds-icon> <span>Page de surveillance</span>
+        </a>
+      </section>
+
+
+     </div>
+
+     <div class="menu-exercice" *ngIf="exercice_id!=null">
+
+      <section class="sidenav-content" style="margin-top: 5px;">
+        <a class="nav-link"
+        (click)="goTripPlan()" >
+            <cds-icon shape="truck"></cds-icon> <span> Programmer un voyage</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="goTodepenses()" >
+            <cds-icon shape="truck"></cds-icon> <span>Enregistrer une depense</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="goToRecettess()" >
+            <cds-icon shape="truck"></cds-icon> <span>Enregistrer une reccete</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="goToActiviteMaint()" >
+            <cds-icon shape="truck"></cds-icon> <span>Enregistrer maintenance</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="goToRentabil()" >
+            <cds-icon shape="truck"></cds-icon> <span>Rentabilité d'un véhicule</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="InventPanne()" >
+            <cds-icon shape="truck"></cds-icon> <span>Inventaire des pannes</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="goToActivityDriver()" >
+            <cds-icon shape="truck"></cds-icon> <span>Activités chauffeurs</span>
+        </a>
+
+        <a class="nav-link"
+        (click)="OnPrintGlobalFinance()" >
+            <cds-icon shape="truck"></cds-icon> <span>bilan financier</span>
+        </a>
+      </section>
+
+     </div>
+
+      <div id="title-exercice" >
+        <a routerLink="/adminPage"><cds-icon shape="cog" size=""></cds-icon> Wend-Panga</a>
+      </div>
+

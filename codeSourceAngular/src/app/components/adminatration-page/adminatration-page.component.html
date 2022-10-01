@@ -1,0 +1,242 @@
+<!--Page content-->
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+            cookie:
+      </a>
+
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="lg" badge="danger"></cds-icon>
+            </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" routerLink="/adminPage" style="color:#fff; text-decoration: none;">
+                <cds-icon shape="cog" size="lg"></cds-icon>
+            </a>
+
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+        <ul>
+            <li>Root</li>
+            <li *ngFor="let item of navigationTab; let i = index">
+                <a style="cursor: pointer;" (click)="goToAdminPage()"> {{ navigationTab[i] }}</a>
+            </li>
+        </ul>
+
+        <a routerLink="/exercices" style="margin-right: 10px;">Exercices</a>
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+
+        <main class="content-area">
+
+            <div class="principale" *ngIf="isAdmindetail && !isref">
+
+                <div class="adminBouton">
+                    <div>
+                        <button clrButton type="button" class="btn btn-primary" (click)="gererRoles()">
+                  Gestion des rôles
+                </button>
+                    </div>
+
+                    <div>
+                        <button clrButton type="button" class="btn btn-primary" (click)="ajouterAdministrateur()">
+                    Ajouter un administrateur
+                  </button>
+                    </div>
+                </div>
+
+                <!--Modal ajouter manager-->
+                <div class="modal" *ngIf="isaddManager">
+
+                    <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width: 70%; height:75%">
+
+                        <div class="modal-content">
+                            <form>
+
+                                <div style="display: flex; justify-content: space-between;">
+
+                                    <div style="text-align:center; text-transform: uppercase;
+                            color:black; font-size: 20px; font-weight: bold;">
+                                        Ajouter un responsable
+                                    </div>
+
+                                    <div>
+                                        <button clrButton class="btn btn-primary" type="reset" (click)="onCancel()">Annuler</button>
+                                        <button clrButton class="btn btn-success" type="reset" (click)="onAddManager()">Ajouter</button>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; padding-bottom: 20px;">
+                                    <div>
+                                        <input clrInput type="text" id="nom" name="nom" size="50px">
+                                        <label for="nom">Name</label>
+
+                                        <input clrInput type="text" id="prenom" name="prenom" size="50px">
+                                        <label for="prenom">prenom</label>
+
+                                        <input clrInput type="text" id="email" name="email" size="50px">
+                                        <label for="email">Email</label>
+                                    </div>
+
+                                    <div>
+                                        <input clrInput type="text" id="phone" name="phone" size="50px">
+                                        <label for="phone">telephone</label>
+
+                                        <input clrInput type="text" id="password" name="password" size="50px">
+                                        <label for="password">password</label>
+
+                                        <select name="role" id="role" clrSelect>
+                                <option value="1">Administrateur</option>
+                                <option value="2">gestionnaire de parc</option>
+                                <option value="3">gestionnaire de la logistique</option>
+                              </select>
+                                        <label for="role">Role</label>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-backdrop" aria-hidden="true">
+                    </div>
+                </div>
+
+                <!--data table info administrateur-->
+                <div *ngIf="isAdmindetail  && !isref">
+
+                    <clr-datagrid>
+                        <clr-dg-placeholder>Aucun administrateur trouvrer</clr-dg-placeholder>
+
+                        <clr-dg-column>Nom</clr-dg-column>
+                        <clr-dg-column>prenom</clr-dg-column>
+                        <clr-dg-column>Role</clr-dg-column>
+
+                        <clr-dg-row *ngFor=" let responsable of responsable " [clrDgItem]="responsable">
+                            <clr-dg-action-overflow>
+                                <button class="action-item" (click)="onEdit(responsable)">Editer</button>
+                                <button class="action-item" (click)="onDelete(responsable)">supprimer</button>
+
+                            </clr-dg-action-overflow>
+
+                            <clr-dg-cell>{{responsable.name}}</clr-dg-cell>
+                            <clr-dg-cell>{{responsable.lastName}}</clr-dg-cell>
+                            <clr-dg-cell>{{responsable.role}}</clr-dg-cell>
+
+                        </clr-dg-row>
+
+                        <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+                            <clr-dg-detail>
+                                <clr-dg-detail-header>
+                                    <span style="font-weight: bold; color:black; text-decoration: underline;">{{detail.name}} {{detail.lastName}}</span>
+                                </clr-dg-detail-header>
+                                <clr-dg-detail-body>
+                                    <div>
+                                        <span>date de creation: {{detail.dateCreation}}</span><br>
+                                        <span>role: {{detail.role}} </span>
+                                        <ul>
+                                            <span style="font-weight: bold; color:black; text-decoration: underline;">Droits:</span>
+                                            <li>Programmer voyages</li>
+                                            <li>Enregistrer depenses</li>
+                                            <li>Enregistrer recettes</li>
+                                        </ul>
+                                    </div>
+                                </clr-dg-detail-body>
+                            </clr-dg-detail>
+                        </ng-template>
+
+                        <clr-dg-footer> Total: {{responsable.length}} responsables </clr-dg-footer>
+                    </clr-datagrid>
+                </div>
+
+            </div>
+
+
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+
+            <div class="profile-image">
+
+            </div>
+
+            <div class="administration">
+
+                <section class="sidenav-content" style="margin-top: 5px;">
+                    <a class="nav-link" (click)="addCar()">
+                        <cds-icon shape="truck"></cds-icon> <span> Ajouter un vehicule</span>
+                    </a>
+
+                    <a class="nav-link" (click)="addDriver()">
+                        <cds-icon shape="truck"></cds-icon> <span>Ajouter un chauffeur</span>
+                    </a>
+                    <a class="nav-link" (click)="addTools()">
+                        <cds-icon shape="truck"></cds-icon> <span>Ajouter une pieces</span>
+                    </a>
+
+                    <a class="nav-link" (click)="addClient()">
+                        <cds-icon shape="truck"></cds-icon> <span>Ajouter un client</span>
+                    </a>
+
+                    <a class="nav-link" (click)="addProducts()">
+                        <cds-icon shape="truck"></cds-icon> <span>Ajouter un produit</span>
+                    </a>
+
+                    <a class="nav-link" (click)="addPath()">
+                        <cds-icon shape="truck"></cds-icon> <span>Structure trajet</span>
+                    </a>
+
+                    <a class="nav-link" (click)="addTown()">
+                        <cds-icon shape="truck"></cds-icon> <span>Stastistiques</span>
+                    </a>
+
+                    <a class="nav-link" (click)="monotoring()">
+                        <cds-icon shape="truck"></cds-icon> <span>monotoring</span>
+                    </a>
+                </section>
+
+
+            </div>
+
+
+            <div id="title-exercice">
+                <a routerLink="/adminPage">
+                    <cds-icon shape="cog" size=""></cds-icon> Wend-Panga</a>
+            </div>
+
+        </nav>
+
+    </div>
+
+
+
+</clr-main-container>

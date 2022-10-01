@@ -1,0 +1,676 @@
+<clr-main-container>
+
+    <clr-header class="header header-2">
+
+        <div class="header-nav">
+
+            <div class="branding">
+                <a href="javascript:0">
+                    <cds-icon shape="airplane" size="xxl" solid aria-label="connection page"></cds-icon>
+                </a>
+                <span class="title">Wendla Saoba Transport</span>
+            </div>
+        </div>
+
+        <div class="settings">
+
+            <a title="cookie activé" class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+      cookie:
+    </a>
+
+            <a class="nav-link nav-icon" aria-label="settings" style="cursor: pointer;">
+                <cds-icon shape="flask" size="lg" badge="danger"></cds-icon>
+            </a>
+
+            <a href="" class="nav-link nav-icon" aria-label="settings">
+                <cds-icon shape="cog" size="lg"></cds-icon>
+            </a>
+        </div>
+
+    </clr-header>
+
+    <!-- chemin de navigation -->
+
+    <nav class="subnav">
+
+        <p>MENU</p>
+
+        <ul>
+            <li>Root</li>
+            <li *ngFor="let item of navigationTab; let i = index">
+                <a [routerLink]="navigationTab[i]"> {{ navigationTab[i] }}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- contenu de la page-->
+    <div class="content-container">
+        <main class="content-area">
+            <form [formGroup]="tripForm" class="tripForm">
+
+                <div>
+                    <div>
+                        <label for="tripDate">Date</label>
+                        <input type="date" id='tripDate' [disabled]="makeSelected" name="tripDate" formControlName='tripDate'>
+                    </div>
+
+                    <div>
+                        <label for="tripCar">Vehicule</label>
+                        <select name="tripCar" id="tripCar" formControlName='tripCar'>
+                    <option *ngFor="let vehicule of listeVehicule; let i = index" value="{{i}}"
+                    [disabled]="makeSelected">{{vehicule.immatriculation}}</option>
+                  </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openModal()">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripProduct">Produit</label>
+                        <select name="tripProduct" id="tripProduct" formControlName='tripProduct'>
+                    <option *ngFor="let produit of listeProduit; let i = index" value="{{i}}"
+                     [disabled]="makeSelected">{{produit.designation}}</option>
+                  </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openProductModal()">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripReason">Motif</label>
+                        <select name="tripReason" id="tripReason" formControlName='tripReason'>
+                    <option value="" [disabled]="makeSelected">M1</option>
+                    <option value="" [disabled]="makeSelected">M3</option>
+                    <option value="" [disabled]="makeSelected">M2</option>
+                  </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openReasonModal()">+</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="tripDriver">Chauffeur</label>
+                        <select name="tripDriver" id="tripDriver" formControlName='tripDriver'>
+                    <option *ngFor="let chauffeur of listeChauffeur; let i = index" value="{{i}}"
+                    [disabled]="makeSelected">{{chauffeur.nom}} {{chauffeur.prenom}}</option>
+                  </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openDriverModal()">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripClient">Client</label>
+                        <select name="tripClient" id="tripClient" formControlName='tripClient'>
+                    <option *ngFor="let client of listeClient; let i = index" value="{{i}}"
+                     [disabled]="makeSelected">{{client.nomClient}}</option>
+                  </select>
+
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openClientModal()">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="tripPath">Trajet</label>
+                        <select name="tripPath" id="tripPath" formControlName='tripPath'>
+                        <option *ngFor="let trajet of listeTrajet; let i = index" value="{{i}}"
+                     [disabled]="makeSelected">{{trajet.villeA}} - {{trajet.villeD}}</option>
+  
+                  </select>
+
+                        <div class="autreFenetre">
+                            <button [disabled]="makeSelected" (click)="openPathModal()">+</button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label for="productQuantity">Quantité</label>
+                        <input [disabled]="makeSelected" type="number" min="0" name="productQuantity" id="productQuantity" formControlName="productQuantity">
+                    </div>
+                </div>
+
+                <div id="buttons" style="width: 20%;">
+                    <button style="width: 100%;" *ngIf="!backup" clrButton class="btn btn-success" (click)="isNewProgrammation()">Nouveau</button>
+                    <button style="width: 100%;" *ngIf="backup" clrButton class="btn btn-primary" (click)="isSave()">Enregistrer</button>
+
+                    <button style="width: 100%; background-color: black; color: white;" clrButton class="btn ">Automatique</button>
+
+                    <button style="width: 100%;" clrButton class="btn btn-info">Ordre de Mission</button>
+
+
+                </div>
+
+            </form>
+
+            <div>
+                <clr-datagrid>
+                    <clr-dg-placeholder>Aucun administrateur trouvrer</clr-dg-placeholder>
+
+                    <clr-dg-column class="columnRow" [clrDgField]="'dateCreation'">Date</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'name'">Vehicule</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'prod'">Produit</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'motif'">Motif</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'role'">Chauffeur</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'lastName'">Client</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'trajet'">Trajet</clr-dg-column>
+                    <clr-dg-column class="columnRow" [clrDgField]="'quantite'" [clrDgColType]="'number'">Quantite</clr-dg-column>
+
+                    <clr-dg-row id="dataGridRow" *clrDgItems="let responsable of responsable; let i=index" [ngClass]="{pair:i%2==0, impair:i%2!=0}" [clrDgItem]="responsable">
+
+                        <clr-dg-action-overflow id="actionRow">
+                            <button class="action-item" [disabled]="makeSelected" (click)="onPrint(responsable)">Ordre de mission</button>
+                            <button class="action-item" [disabled]="makeSelected" (click)="onEdit(responsable)">Editer</button>
+                            <button class="action-item" [disabled]="makeSelected" (click)="onDelete(responsable)">supprimer</button>
+                        </clr-dg-action-overflow>
+
+                        <clr-dg-cell class="cellule">{{responsable.dateCreation}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.name}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.prod}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.motif}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.role}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.lastName}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.trajet}}</clr-dg-cell>
+                        <clr-dg-cell class="cellule">{{responsable.quantite}}</clr-dg-cell>
+                    </clr-dg-row>
+
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                            <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">Users per page</clr-dg-page-size>
+                            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} voyages
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+
+                </clr-datagrid>
+            </div>
+
+
+            <div class="modal" *ngIf="saveProductOpen">
+
+                <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width:50%; height:50%; ">
+
+                    <div class="modal-content">
+
+                        <form clrForm [formGroup]="productSaveForm">
+                            <div style="display: flex; justify-content: space-between;">
+
+                                <div style="text-align:center; text-transform: uppercase;
+                            color:black; font-size: 20px; font-weight: bold;">
+                                    Ajouter un Produit
+                                </div>
+
+                                <div>
+                                    <button clrButton class="btn btn-primary" type="reset" (click)="closeModal()">Annuler</button>
+                                    <button clrButton class="btn btn-success" [disabled]="isProduit" (click)="onAddProduit()">Ajouter</button>
+                                </div>
+
+                            </div>
+
+                            <div style="display: flex; justify-content: center; padding-bottom: 30px; ">
+                                <div>
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="intitule" name="intitule" size="50px" formControlName="intitule">
+                                        <label for="intitule">Intitule</label>
+                                    </clr-input-container>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="modal-backdrop" aria-hidden="true">
+                </div>
+
+            </div>
+
+
+            <div class="modal" *ngIf="saveMotifOpen">
+
+                <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width:50%; height:50%; ">
+
+                    <div class="modal-content">
+
+                        <form clrForm [formGroup]="motifSaveForm">
+                            <div style="display: flex; justify-content: space-between;">
+
+                                <div style="text-align:center; text-transform: uppercase;
+                          color:black; font-size: 20px; font-weight: bold;">
+                                    Ajouter un Motif
+                                </div>
+
+                                <div>
+                                    <button clrButton class="btn btn-primary" type="reset" (click)="closeModal()">Annuler</button>
+                                    <button clrButton class="btn btn-success" [disabled]="isMotif" (click)="onAddMotif()">Ajouter</button>
+                                </div>
+
+                            </div>
+
+                            <div style="display: flex; justify-content: center; padding-bottom: 30px; ">
+                                <div>
+                                    <clr-select-container>
+                                        <label for="">Motif:</label>
+                                        <select clrSelect name="motif" formControlName='motif'>
+                                <option value="">Livraison</option>
+                                <option value="">Approvisionnement</option>
+                                <option value="">Autres</option>
+                              </select>
+                                    </clr-select-container>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="modal-backdrop" aria-hidden="true">
+                </div>
+
+            </div>
+
+            <!-- wizard save car -->
+            <div>
+                <clr-wizard #wizard [clrWizardOpen]="openCarSave" clrWizardSize='lg' [clrWizardClosable]='false'>
+
+                    <clr-wizard-title>Ajouter un vehicule</clr-wizard-title>
+
+                    <div class="wizardButton">
+                        <clr-wizard-button [type]="'cancel'" (click)="closeModal()">Cancel</clr-wizard-button>
+                        <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+                        <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+                        <clr-wizard-button [type]="'finish'" (clrWizardButtonClicked)="saveCarHandle()">Enregistrer</clr-wizard-button>
+                    </div>
+
+                    <clr-wizard-page #pageOne [clrWizardPageNextDisabled]="isNextWizard">
+
+                        <ng-template clrPageTitle>Informations du vehicule</ng-template>
+                        <ng-template clrPageNavTitle>Informations du vehicule</ng-template>
+
+                        <form clrForm clrLayout="vertical" [formGroup]="carSaveForm">
+                            <div class="wizardFormContent">
+                                <div>
+                                    <clr-input-container>
+                                        <label>Immatriculation</label>
+                                        <input type="text" clrInput name="immatriculation" formControlName="immatriculation" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <label>Poids</label>
+                                        <input type='number' min="0" clrInput name="poids" formControlName="poids" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+
+                                    <clr-select-container>
+                                        <label>fonction:</label>
+                                        <select clrSelect name="fonction" formControlName="fonction">
+                                    <option value="livraison">Livraison</option>
+                                    <option value="approvisionnement">Approvisionnement</option>
+                                    <option value="autres">Autres</option>
+                                  </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+
+                                </div>
+
+                                <div>
+                                    <clr-input-container>
+                                        <label>Capacite</label>
+                                        <input type='number' min="0" clrInput name="capacite" formControlName="capacite" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-date-container>
+                                        <label>Mise en circulation</label>
+                                        <input type="date" clrDate name="dateCirculation" formControlName="dateCirculation" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-date-container>
+                                </div>
+                            </div>
+                        </form>
+                    </clr-wizard-page>
+
+                    <clr-wizard-page #pageTwo [clrWizardPageNextDisabled]="isDoneWizard">
+
+                        <ng-template clrPageTitle>Documents du vehicule</ng-template>
+                        <ng-template clrPageNavTitle>Documents</ng-template>
+
+
+                        <form clrForm clrLayout="vertical" [formGroup]="documentCarForm">
+                            <div class="wizardFormContent">
+
+                                <div formGroupName="assurance">
+                                    <h3>Assurance</h3>
+                                    <clr-date-container>
+                                        <label>Debut</label>
+                                        <input type="date" clrDate name="AdateDebut" formControlName="AssDateDebut" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-date-container>
+
+                                    <clr-date-container>
+                                        <label>Expiration</label>
+                                        <input type="date" clrDate name="AdateExpiration" formControlName="AssDateExpiration" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-date-container>
+
+                                </div>
+
+                                <div formGroupName="visiteTechnique">
+                                    <h3>Visite technique</h3>
+                                    <clr-date-container>
+                                        <label>Debut</label>
+                                        <input type="date" clrDate name="VTdateDebut" formControlName="vTechDateDebut" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-date-container>
+
+                                    <clr-date-container>
+                                        <label>Expiration</label>
+                                        <input type="date" clrDate name="VTdateFin" formControlName="vTechDateFin" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-date-container>
+                                </div>
+                            </div>
+                        </form>
+                    </clr-wizard-page>
+
+                </clr-wizard>
+            </div>
+
+
+            <div class="modal" *ngIf="openDriverSave">
+
+                <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width:55%; height:50%; ">
+
+                    <div class="modal-content">
+
+                        <form clrForm clrLayout="vertical" [formGroup]="driverSaveForm">
+                            <div style="display: flex; justify-content: space-between;">
+
+                                <div style="text-align:center; text-transform: uppercase;
+                            color:black; font-size: 20px; font-weight: bold;">
+                                    Ajouter un Chauffeur
+                                </div>
+
+                                <div>
+                                    <button clrButton class="btn btn-primary" (click)="closeModal()">Annuler</button>
+                                    <button clrButton class="btn btn-success" [disabled]="isDriver" (click)="onAddDriver()">Ajouter</button>
+                                </div>
+
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 30px; ">
+                                <div>
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="nomDriver" name="nomDriver" size="30px" formControlName="nomDriver">
+                                        <label for="nomDriver">Nom:</label>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="prenomDriver" name="prenomDriver" size="30px" formControlName="prenomDriver">
+                                        <label for="prenomDriver">prenom:</label>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="adresseDriver" name="adresseDriver" size="30px" formControlName="adresseDriver">
+                                        <label for="adresseDriver">Adresse:</label>
+                                    </clr-input-container>
+
+
+                                </div>
+
+                                <div>
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="permisDriver" name="permisDriver" size="30px" formControlName="permisDriver">
+                                        <label for="permisDriver">Permis</label>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="photoDriver" name="photoDriver" size="30px" formControlName="photoDriver">
+                                        <label for="photoDriver">Photo:</label>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <input clrInput type="text" id="dateExperation" name="dateExperation" size="30px" formControlName="dateExperation">
+                                        <label for="dateExperation">Expiration</label>
+                                    </clr-input-container>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="modal-backdrop" aria-hidden="true">
+                </div>
+
+            </div>
+
+            <div class="modal" *ngIf="openTrajetModal">
+
+                <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true" style="width:55%; height:50%; ">
+
+                    <div class="modal-content">
+
+                        <form clrForm clrLayout="vertical" [formGroup]="pathSaveForm">
+                            <div style="display: flex; justify-content: space-between;">
+
+                                <div style="text-align:center; text-transform: uppercase;
+                          color:black; font-size: 20px; font-weight: bold;">
+                                    Ajouter un Trajet
+                                </div>
+
+                                <div>
+                                    <button clrButton class="btn btn-primary" (click)="closeModal()">Annuler</button>
+                                    <button clrButton class="btn btn-success" [disabled]="isPath" (click)="onAddPath()">Ajouter</button>
+                                </div>
+
+                            </div>
+
+                            <div style="display: flex; justify-content: space-around; padding-bottom: 30px; ">
+                                <div>
+                                    <clr-select-container>
+                                        <label>Type de trajet:</label>
+                                        <select clrSelect name="typeTrajet" formControlName="typeTrajet">
+                                <option value="Internationnal">Internationnal</option>
+                                <option value="Nationnal">Nationnal </option>
+                                <option value="autres">Autres</option>
+                              </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+
+                                    <clr-select-container>
+                                        <label>Ville de depart:</label>
+                                        <select clrSelect name="departVille" formControlName="departVille">
+                                <option value="ville.nom" *ngFor="let ville of listeVille">{{ville.nom}}</option>
+                              </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+
+                                    <clr-select-container>
+                                        <label>pays de depart:</label>
+                                        <select clrSelect name="departPays" formControlName="departPays">
+                                <option value="livraison">Livraison</option>
+                                <option value="approvisionnement">Approvisionnement</option>
+                                <option value="autres">Autres</option>
+                              </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+
+                                </div>
+
+                                <div>
+
+                                    <clr-select-container>
+                                        <label> Ville d'arrivee:</label>
+                                        <select clrSelect name="arriveVille" formControlName="arriveVille">
+                                <option value="ville.nom" *ngFor="let ville of listeVille">{{ville.nom}}</option>
+                              </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+
+                                    <clr-select-container>
+                                        <label> Pays d'arrivee:</label>
+                                        <select clrSelect name="arrivePays" formControlName="arrivePays">
+                                <option value="livraison">Livraison</option>
+                                <option value="approvisionnement">Approvisionnement</option>
+                                <option value="autres">Autres</option>
+                              </select>
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-select-container>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-backdrop" aria-hidden="true">
+                </div>
+
+            </div>
+
+            <div>
+                <clr-wizard #wizard [clrWizardOpen]="openSaveClientModal" clrWizardSize='lg' [clrWizardClosable]='false'>
+
+                    <clr-wizard-title>Ajouter un Client</clr-wizard-title>
+
+                    <div class="wizardButton">
+                        <clr-wizard-button [type]="'cancel'" (click)="closeModal()">Cancel</clr-wizard-button>
+                        <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+                        <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+                        <clr-wizard-button [type]="'finish'" (clrWizardButtonClicked)="saveClient()">Enregistrer</clr-wizard-button>
+                    </div>
+
+                    <clr-wizard-page #pageOne [clrWizardPageNextDisabled]="false">
+
+                        <ng-template clrPageTitle>Type de client</ng-template>
+                        <ng-template clrPageNavTitle>Types de client</ng-template>
+
+                        <form clrForm clrLayout="vertical">
+                            <div class="wizardFormContent">
+                                <div style="margin-top: 20px;">
+                                    <img src="../../assets/images/man-user-icon.png" alt=" particulier" width="100px;" (click)="ClickedPerson()" class="imageClient">
+                                    <h3 style="text-decoration: underline;">Particulier</h3>
+                                </div>
+
+                                <div style="margin-top: 20px;">
+                                    <img src=" ../../assets/images/Authentificqtion.jpg" (click)="ClickedEntreprise()" class="imageClient" alt=" Entreprise" width="100px;">
+                                    <h3 style="text-decoration: underline;">Entreprise</h3>
+                                </div>
+
+                            </div>
+                        </form>
+                    </clr-wizard-page>
+
+                    <clr-wizard-page #pageTwo [clrWizardPageNextDisabled]="isClient">
+
+                        <ng-template clrPageTitle>Informations du client</ng-template>
+                        <ng-template clrPageNavTitle>Informations Client</ng-template>
+
+                        <div class="wizardFormContent">
+                            <form clrForm clrLayout="vertical" [formGroup]="clientSaveForm">
+                                <div>
+
+                                    <div>
+                                        <clr-input-container>
+                                            <label>Nom Client</label>
+                                            <input type="text" clrInput name="nomClient" formControlName="nomClient" />
+                                            <clr-control-error>obligatoire !</clr-control-error>
+                                        </clr-input-container>
+
+                                        <clr-input-container>
+                                            <label>Telephone Client</label>
+                                            <input type="text" clrInput name="telClient" formControlName="telClient" />
+                                            <clr-control-error>obligatoire !</clr-control-error>
+                                        </clr-input-container>
+
+                                        <clr-input-container>
+                                            <label>Adresse Client</label>
+                                            <input type="text" clrInput name="adresse" formControlName="adresse" />
+                                            <clr-control-error>obligatoire !</clr-control-error>
+                                        </clr-input-container>
+                                    </div>
+
+
+                                </div>
+                            </form>
+
+                            <form clrForm clrLayout="vertical" [formGroup]="entrepriseForm" *ngIf="entrepriseImage">
+                                <div>
+                                    <clr-input-container>
+                                        <label>IFU Entreprise</label>
+                                        <input type="text" clrInput name="ifuClient" formControlName="ifuClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <label>Logo Entreprise</label>
+                                        <input type="text" clrInput name="logoClient" formControlName="logoClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+
+                                    <clr-input-container>
+                                        <label>RCCM Entreprise</label>
+                                        <input type="text" clrInput name="rccmclient" formControlName="rccmclient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+                                </div>
+
+                            </form>
+
+                            <form clrForm clrLayout="vertical" [formGroup]="personClientForm" *ngIf="personneImage">
+                                <div>
+                                    <clr-input-container>
+                                        <label>Prenom Client</label>
+                                        <input type="text" clrInput name="prenomClient" formControlName="prenomClient" />
+                                        <clr-control-error>obligatoire !</clr-control-error>
+                                    </clr-input-container>
+                                </div>
+                            </form>
+                        </div>
+
+                    </clr-wizard-page>
+
+                </clr-wizard>
+            </div>
+
+            <p>
+                <router-outlet></router-outlet>
+            </p>
+        </main>
+
+        <!-- menu de gauche-->
+        <nav class="sidenav" [clr-nav-level]="2">
+            <app-menu-generale *ngIf="true"></app-menu-generale>
+        </nav>
+
+    </div>
+
+    <div>
+
+    </div>
+
+</clr-main-container>

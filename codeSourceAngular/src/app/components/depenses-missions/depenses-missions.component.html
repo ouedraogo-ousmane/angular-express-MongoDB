@@ -1,0 +1,77 @@
+<form [formGroup]="depenseMissionForm" class="tripForm">
+
+    <div>
+        <div>
+            <label for="echangeDate">Date</label>
+            <input type="Date" id='echangeDate' [disabled]="makeSelected" name="echangeDate" formControlName='echangeDate'>
+        </div>
+
+        <div>
+            <label for="mission">Missions</label>
+            <select name="mission" id="mission" formControlName='mission'>
+                <option value="DHQGS4521" [disabled]="">DHQGS4521</option>
+                <option value="HVSHSG355" [disabled]="">HVSHSG355</option>
+                <option value="ZECSHL782" [disabled]="">ZECSHL782</option>
+              </select>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <label for="libelle">Libelle</label>
+            <input type="text" id='libelle' [disabled]="makeSelected" name="libelle" formControlName='libelle'>
+        </div>
+
+        <div>
+            <label for="montant">Montant</label>
+            <input type="number" id='montant' [disabled]="makeSelected" name="montant" formControlName='montant'>
+        </div>
+
+
+    </div>
+
+
+    <div id="buttons">
+        <button *ngIf="!backup" clrButton class="btn btn-primary" (click)="isNewSaving()">Nouveau</button>
+        <button *ngIf="!onUpdating" clrButton type="submit" class="btn btn-success" (click)="isSave()">Enregistrer</button>
+        <button clrButton class="btn btn-success" type="submit" *ngIf="onUpdating" (click)="updateDepense()">Modifier</button>
+        <button clrButton class="btn btn-danger">Supprimer</button>
+    </div>
+</form>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-placeholder>Aucune depense trouvé</clr-dg-placeholder>
+        <clr-dg-column class="columnRow" [clrDgField]="">ID</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'echangeDate'">Date</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'libelle'">Libelle</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'mission'">Mission</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'vehicule'">Vehicule</clr-dg-column>
+        <clr-dg-column class="columnRow" [clrDgField]="'montant'">Montant</clr-dg-column>
+
+        <clr-dg-row id="dataGridRow" *clrDgItems="let depense of listeDepense; let i=index" [ngClass]="{pair:i%2==0, impair:i%2!=0}" [clrDgItem]="depense">
+
+            <clr-dg-action-overflow id="actionRow">
+                <button class="action-item" (click)="onEdit(depense)">Editer</button>
+                <button class="action-item" (click)="onDelete(depense)">supprimer</button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell class="cellule">{{i}}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{depense.date| date: 'dd/MM/yyyy' }}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{depense.libelle}} </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{depense.mission}} </clr-dg-cell>
+            <clr-dg-cell class="cellule">{{depense.vehicule }}</clr-dg-cell>
+            <clr-dg-cell class="cellule">{{depense.montant}} FCFA</clr-dg-cell>
+
+
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgLastPage]='3' id="paginationRow">
+                <clr-dg-page-size [clrPageSizeOptions]="[5,8,9,10]">depense par page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} depenses
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+    </clr-datagrid>
+</div>

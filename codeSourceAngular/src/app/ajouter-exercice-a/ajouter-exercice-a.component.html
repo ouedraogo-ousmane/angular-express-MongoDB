@@ -1,0 +1,64 @@
+<clr-wizard #wizard [clrWizardOpen]="AddExo" [clrWizardClosable]="false">
+
+    <clr-wizard-title>Page d'exercice</clr-wizard-title>
+
+    <form clrForm clrLayout="vertical" [formGroup]="exerciceForm">
+
+        <clr-wizard-page #pageOne>
+
+            <ng-template clrPageTitle>
+                <div id="title">
+                    Informations requises pour la creation d'un exercice
+                </div>
+
+            </ng-template>
+
+            <ng-template clrPageNavTitle> Creation d'exercice </ng-template>
+
+
+
+            <div formGroupName="exerciceInfo" class="exerciceForm">
+
+                <!--clr-input-container>
+
+                    <label for="intitule" class="ExoCreateLable"> Intitulé: </label>
+
+                    <input id="intitule" clrInput name="name" placeholder="Obligatoire" size="50px" />
+
+                </clr-input-container-->
+
+                <clr-input-container>
+
+                    <label for="auteur" class="ExoCreateLable">Auteur:</label>
+                    <input type="text" clrInput id="auteur" formControlName="auteur" value="GNamou" name="auteur" size="50px" />
+
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="debut" class="ExoCreateLable">Date de debut:</label>
+                    <input type="date" clrInput id="debut" formControlName="dateDebut" placeholder="Obligatoire" name="debut" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="fin" class="ExoCreateLable">Date de fin:</label>
+
+                    <input type="date" clrInput id="fin" formControlName="dateFin" name="fin" />
+
+                </clr-input-container>
+
+            </div>
+
+            <div class="div-button">
+                <button clrButton [type]="'cancel'" class="btn btn-danger" clrButton (click)="Close()"> Cancel</button>
+
+
+                <button clrButton type="submit" class="btn btn-success" clrButton style="margin-left: 15px;" [disabled]="isValid()" (click)="AddExercice()"> Créer</button>
+
+            </div>
+
+        </clr-wizard-page>
+
+
+    </form>
+
+</clr-wizard>
